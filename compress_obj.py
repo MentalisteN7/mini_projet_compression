@@ -17,10 +17,15 @@ def getPlaneEquation(v1, v2, v3):
     a = (v2[1] - v1[1]) * (v3[2] - v1[2]) - (v3[1] - v1[1])*(v2[2] - v1[2])
     b = (v2[2] - v1[2]) * (v3[0] - v1[0]) - (v3[2] - v1[2])*(v2[0] - v1[0])
     c = (v2[0] - v1[0]) * (v3[1] - v1[1]) - (v3[0] - v1[0])*(v2[1] - v1[1])
+    norm = np.sqrt(a*a + b*b + c*c)
+    a = a / norm
+    b = b / norm
+    c = c / norm
     d = - (a*v1[0] + b*v1[1] + c*v1[2])
 
-    tot = (a + b + c + d)
-    return (a/tot, b/tot, c/tot, d/tot)
+    # tot = (a + b + c + d)
+    # return (a/tot, b/tot, c/tot, d/tot)
+    return (a, b, c, d)
 
 def getListKp(obj: ObjLoader):
     listKp = []
