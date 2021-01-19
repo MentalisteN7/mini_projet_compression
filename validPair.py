@@ -1,6 +1,7 @@
 
 from obj_loader import ObjLoader
 import numpy as np
+import math
 
 
 class validPair():
@@ -38,15 +39,8 @@ class validPair():
 
             # adjacence_matrix[second_vertex-1][third_vertex-1] = 1 # second -> third
             # adjacence_matrix[third_vertex-1][second_vertex-1] = 1 # third -> second
-
-    def init_proche(self, lapin):
-
-        for vertex in lapin.vertices:
-
-
-            distance = self.norm_tuple(v1,v2)
     
-    def norm_tuple(self,v1,v2):
+    def __norm_tuple(self,v1,v2):
         v1_x = v1[0]
         v1_y = v1[1]
         v1_z = v1[2]
@@ -55,12 +49,29 @@ class validPair():
         v2_y = v2[1]
         v2_z = v2[2]
 
-        norm = (v1_x - v2_x)
-
-        norm = v1_x - v2_x
-
+        norm = math.sqrt( (v1_x - v2_x)**2 + (v1_y - v2_y)**2 + (v1_z - v2_z)**2 )
         return norm
 
+
+    def init_proche(self, lapin):
+
+        vertices_left = lapin.vertices
+
+        ind_v1 = 1
+        ind_v2 = 1
+
+        for v1 in lapin.vertices:
+            for v2 in vertices_left:
+                distance = self.__norm_tuple(v1,v2)
+
+                if (distance > 0 and distance < self.treshold):
+                    self.proches.append((ind_v1, ind_v2))
+                    self.proches.append((ind_v2, ind_v1))
+
+                ind_v2 = ind_v2 + 1
+
+            ind_v1 = ind_v1 + 1
+            del vertices_left[-1] # On ne repasse pas sur les premiers vertex déjà traités
 
 
 obj = 'bunny_origin.obj'
@@ -75,5 +86,8 @@ valid_pair_instance.init_voisin(lapin)
 
 v1 = lapin.vertices[0]
 v2 = lapin.vertices[1]
-valid_pair_instance.norm_tuple(v1,v2)
+# d = valid_pair_instance.norm_tuple(v1,v2)
 print(lapin.vertices[0])
+
+valid_pair_instance.init_proche(lapin)
+print(len(valid_pair_instance.proches))
