@@ -10,6 +10,7 @@ lapin = ObjLoader(obj)
 def getKp(a, b, c, d):
     return [[a*a, a*b, a*c, a*d],
             [a*b, b*b, b*c, b*d],
+            [a*c, b*c, c*c, c*d],
             [a*d, b*d, c*d, d*d]]
 
 def getPlaneEquation(v1, v2, v3):
@@ -36,13 +37,13 @@ def getListQ(obj: ObjLoader, listK):
     for vertex_index in range(1,len(obj.vertices) + 1):
         Q = np.matrix([[0., 0., 0., 0.],
                        [0., 0., 0., 0.],
+                       [0., 0., 0., 0.],
                        [0., 0., 0., 0.]])
 
         for face_index in range(len(obj.faces)):
             if vertex_index in obj.faces[face_index]:
                 Q += np.matrix(listKp[face_index])
-        # print(Q)
-        # print('\n\n')
+
         listQ += [Q]
     return listQ
 
