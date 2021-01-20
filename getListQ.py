@@ -2,9 +2,9 @@ from typing import Tuple
 from obj_loader import ObjLoader
 import numpy as np
 
-obj = 'bunny_origin.obj'
+# obj = 'bunny_origin.obj'
+# lapin = ObjLoader(obj)
 
-lapin = ObjLoader(obj)
 # 1.  Compute the Q matrices for all the initial vertices.
 
 def getKp(a, b, c, d):
@@ -22,9 +22,7 @@ def getPlaneEquation(v1, v2, v3):
     b = b / norm
     c = c / norm
     d = - (a*v1[0] + b*v1[1] + c*v1[2])
-
-    # tot = (a + b + c + d)
-    # return (a/tot, b/tot, c/tot, d/tot)
+    
     return (a, b, c, d)
 
 def getListKp(obj: ObjLoader):
@@ -37,7 +35,7 @@ def getListKp(obj: ObjLoader):
         listKp += [getKp(a, b, c, d)]
     return listKp
 
-def getListQ(obj: ObjLoader, listK):
+def getListQ(obj: ObjLoader, listKp):
     listQ = []
     for vertex_index in range(1,len(obj.vertices) + 1):
         Q = np.matrix([[0., 0., 0., 0.],
@@ -54,12 +52,6 @@ def getListQ(obj: ObjLoader, listK):
 
 # a, b, c, d = planeEquation(lapin.vertices[lapin.faces[0][0]], lapin.vertices[lapin.faces[0][1]], lapin.vertices[lapin.faces[0][2]])
 # kp = Kp(a, b, c, d)
-listKp = getListKp(lapin)
-listQ = getListQ(lapin, listKp)
-print(listQ[0])
-# print(listKp[1])
-# 2.  Select all valid pairs.
-# 3.  Compute the optimal contraction target Nv for each valid pair.v1;v2/. 
-# The errorNvT.Q1CQ2/Nv of this target vertex becomes the cost of contracting that pair.
-# 4.  Place all the pairs in a heap keyed on cost with the minimumcost pair at the top.
-# 5.  Iteratively remove the pair.v1;v2/of least cost from the heap,contract this pair, and update the costs of all valid pairs involv-ingv1.
+# listKp = getListKp(lapin)
+# listQ = getListQ(lapin, listKp)
+# print(listQ[0])
