@@ -9,7 +9,7 @@ class validPair():
     def __init__(self):
         self.voisins = []
         self.proches = []
-        self.treshold = 5
+        self.treshold = 1
 
     def init_voisin(self, lapin):
         k = 0
@@ -74,20 +74,25 @@ class validPair():
             del vertices_left[-1] # On ne repasse pas sur les premiers vertex déjà traités
 
 
-obj = 'bunny_origin.obj'
-lapin = ObjLoader(obj)
-print(lapin.vertices[lapin.faces[0][0]])
+def main():
+    obj = 'bunny_origin.obj'
+    lapin = ObjLoader(obj)
+    print(lapin.vertices[lapin.faces[0][0]])
 
-nb_vertices = len(lapin.vertices)
+    nb_vertices = len(lapin.vertices)
 
-valid_pair_instance = validPair()
-valid_pair_instance.init_voisin(lapin)
-# print(valid_pair_instance.voisins)
+    valid_pair_instance = validPair()
+    valid_pair_instance.init_voisin(lapin)
+    # print(valid_pair_instance.voisins)
 
-v1 = lapin.vertices[0]
-v2 = lapin.vertices[1]
-# d = valid_pair_instance.norm_tuple(v1,v2)
-print(lapin.vertices[0])
+    v1 = lapin.vertices[0]
+    v2 = lapin.vertices[1]
+    # d = valid_pair_instance.norm_tuple(v1,v2)
+    print(lapin.vertices[0])
 
-valid_pair_instance.init_proche(lapin)
-print(len(valid_pair_instance.proches))
+    valid_pair_instance.init_proche(lapin)
+    print(len(valid_pair_instance.proches))
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
