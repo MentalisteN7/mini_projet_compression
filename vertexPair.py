@@ -10,7 +10,7 @@ import numpy as np
 class vertexPair:
     vindices : tuple
     cost : float
-    v_bar : numpy.ndarray
+    v_bar : np.ndarray
     
     def __init__(self, indices):
         self.vindices = indices

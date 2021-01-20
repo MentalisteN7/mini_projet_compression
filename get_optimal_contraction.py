@@ -1,4 +1,4 @@
-from compress_obj import getListKp, getListQ
+from getListQ import getListKp, getListQ
 from validPair import validPair
 from typing import Tuple
 from obj_loader import ObjLoader
