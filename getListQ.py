@@ -50,8 +50,8 @@ def getListQ(obj: ObjLoader, listKp):
         listQ += [Q]
     return listQ
 
-# a, b, c, d = planeEquation(lapin.vertices[lapin.faces[0][0]], lapin.vertices[lapin.faces[0][1]], lapin.vertices[lapin.faces[0][2]])
-# kp = Kp(a, b, c, d)
+# a, b, c, d = getPlaneEquation(lapin.vertices[lapin.faces[0][0]], lapin.vertices[lapin.faces[0][1]], lapin.vertices[lapin.faces[0][2]])
+# kp = getKp(a, b, c, d)
 # listKp = getListKp(lapin)
 # listQ = getListQ(lapin, listKp)
 # print(listQ[0])
