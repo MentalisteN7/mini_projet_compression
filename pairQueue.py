@@ -18,3 +18,6 @@ class PairQueue
         popped = heapq.heappop(self.heap)
         pair = popped[2]
         return pair
+    
+    def isEmpty(self):
+        return self.heap == []
