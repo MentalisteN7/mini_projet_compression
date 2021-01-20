@@ -1,3 +1,5 @@
+import numpy as np
+
 class ObjLoader(object):
     def __init__(self, fileName):
         self.vertices = []
@@ -11,8 +13,8 @@ class ObjLoader(object):
                     index2 = line.find(" ", index1 + 1)
                     index3 = line.find(" ", index2 + 1)
 
-                    vertex = (float(line[index1:index2]), float(line[index2:index3]), float(line[index3:-1]))
-                    vertex = (round(vertex[0], 2), round(vertex[1], 2), round(vertex[2], 2))
+                    vertex = np.array([float(line[index1:index2]), float(line[index2:index3]), float(line[index3:-1])])
+                    # vertex = np.matrix([round(vertex[0], 2), round(vertex[1], 2), round(vertex[2], 2)])
                     self.vertices.append(vertex)
 
                 elif line[0] == "f":
