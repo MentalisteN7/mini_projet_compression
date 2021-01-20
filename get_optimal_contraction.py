@@ -14,12 +14,29 @@ def get_optimal_contraction(v1,v2,q1,q2):
 
     # v_tilt = __addition_tuple(v1,v2)
 
-    q_inv = np.linalg.inv(q_tilt)
-    vect_un = [0, 0, 0, 1]
+    determinant = np.linalg.det(q_tilt)
 
-    v_tilt = q_inv.dot(vect_un)
+    if (determinant == 0):
+        q_inv = np.linalg.inv(q_tilt)
+        vect_un = [0, 0, 0, 1]
+        v_tilt = q_inv.dot(vect_un)
+        q_trans =  q_inv.transpose()
+        print(q_trans)
+        aux = q_trans.dot(v_tilt)
+        error = aux.dot(q_inv)
 
-    print(v_tilt)
+    else:
+        q_inv = np.linalg.inv(q_tilt)
+        v_tilt = __addition_tuple(v1,v2) / 2
+        q_trans =  q_inv.transpose()
+        v_tilt = v_tilt +  (1,)
+
+        aux = q_trans.dot(v_tilt)
+        error = aux.dot(q_inv)
+
+    return error
+
+
 
 def __addition_tuple(v1,v2):
         v1_x = v1[0]
@@ -32,6 +49,7 @@ def __addition_tuple(v1,v2):
 
         v =  ( v1_x + v2_x, v1_y + v2_y, v1_z + v2_z )
         return v
+        
 def main():
     obj = 'bunny_origin.obj'
     lapin = ObjLoader(obj)
