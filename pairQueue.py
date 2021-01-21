@@ -14,9 +14,17 @@ class PairQueue():
         heapq.heappush(self.heap, (cost, self.counter, pair))
         self.counter += 1
     
-    def pop(self):
-        popped = heapq.heappop(self.heap)
-        pair = popped[2]
+    def pop(self, deletedVertices):
+        done = not self.isEmpty()
+        pair = (0,0)
+        while not done:
+            popped = heapq.heappop(self.heap)
+            pairCand = popped[2]
+            if not ((pairCand[0] in deletedVertices) or (pairCand[1] in deletedVertices)):
+                pair = pairCand
+                done = True
+            else:
+                done = self.isEmpty()
         return pair
             
     def isEmpty(self):
