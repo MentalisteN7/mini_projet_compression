@@ -73,14 +73,14 @@ def main():
     valid_pair_instance = infoVertexVoisin()
     valid_pair_instance.init_voisin(lapin)
     valid_pair_instance.init_proche(lapin)
-    # print(valid_pair_instance.voisins[0])
-    # v_pair_ind = valid_pair_instance.voisins[0]
-    # v1_ind = v_pair_ind[0]
-    # v2_ind = v_pair_ind[1]
-    # v1 = lapin.vertices[v1_ind]
-    # v2 = lapin.vertices[v2_ind]
-    # error = get_optimal_contraction(v1,v2,q1,q2)
-    # print('error = ', error)
+    print(valid_pair_instance.dic_voisins[1])
+    v_pair_ind = valid_pair_instance.dic_voisins[1]
+    v1_ind = v_pair_ind[0]
+    v2_ind = v_pair_ind[1]
+    v1 = lapin.vertices[v1_ind]
+    v2 = lapin.vertices[v2_ind]
+    error = get_optimal_contraction(v1,v2,q1,q2)
+    print('error = ', error)
     # test =  np.asarray(lapin.vertices)
     # print(test)
     # print(lapin.faces)
