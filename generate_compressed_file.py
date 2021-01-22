@@ -45,7 +45,7 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     efv = 'efv 1 3 4'
     v = 'v 0.0 0.0 0.0'
     f = 'f 1 2 3'
-    ev = 'ev 453 -0.01 -0.98 0.79 -0.01 -0.45 0.58'
+    ev = 'ev 1 -0.01 -0.98 0.79 -0.01 -0.45 0.58'
     tv = 'tv 1 1.0 1.0 1.0'
     ef = 'ef 1 1 2 4 1 2 3'
     df = 'df 1 1 2 4'
