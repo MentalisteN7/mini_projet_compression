@@ -52,4 +52,4 @@ def calculS(listInstruction) -> str:
         inst.replace("\n", "")
         if len(inst.split()) > 0:
             taille += SIZES[inst.split()[0]]
-    return 's ' + str(taille) 
+    return 's ' + str(taille)
