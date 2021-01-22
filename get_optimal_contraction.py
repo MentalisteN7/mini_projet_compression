@@ -8,55 +8,60 @@ import numpy as np
 # v1,v2: tuples 3x1
 # q1,q2: ??
 def get_optimal_contraction(v1,v2,q1,q2):
-    q_tilt = q1 + q2
-    q_tilt[3,:] = 0
-    q_tilt[3,3] = 1
-
-    # v_tilt = __addition_tuple(v1,v2)
-
-    determinant = np.linalg.det(q_tilt)
-
-    if (determinant == 0):
-        q_inv = np.linalg.inv(q_tilt)
+    q_barre = q1 + q2
+    q_aux = q_barre
+    q_aux[3,:] = 0
+    q_aux[3,3] = 1
+    
+    conditionnement = np.linalg.cond(q_barre)
+    #Si q_aux est inversible, 
+    if (conditionnement < 1e5):
+        q_inv = np.linalg.inv(q_aux)
         vect_un = [0, 0, 0, 1]
-        v_tilt = q_inv.dot(vect_un)
-        v_trans =  v_tilt.transpose()
-        aux = v_tilt.dot(q_inv)
-        error = aux.dot(v_trans)
-
+        v_barre = q_inv.dot(vect_un)
+        cost = v_barre.dot(q_barre).dot(v_barre.transpose())
+        v_barre = v_barre[0:3] #on ne veut pas la représentation homogène
+    
+    #Si cela aussi échoue, choisir v_barre parmi les extrémités ou le milieu
     else:
-        q_inv = np.linalg.inv(q_tilt)
-        v_tilt = __addition_tuple(v1,v2)
-        v_tilt = __division_tuple(v_tilt, 2)
-        v_tilt = v_tilt +  (1,)
-        v_tilt = np.asarray(v_tilt)
-        v_trans =  v_tilt.transpose()
-        aux = v_tilt.dot(q_inv)
-        error = aux.dot(v_trans)
+        milieu = 0.5 * (v1 + v2)
+        candidats = [v1, milieu, v2]
+        vect_homogene = np.ones(4)
+        cost = np.Inf
+        imin = 0
+        for i in range(3):
+            vect_homogene[0:3] = candidats[i]
+            costi = vect_homogene.dot(q_barre).dot(vect_homogene)
+            if costi < cost:
+                cost = costi
+                imin = i
+        v_barre = candidats[i]
+        
+    
 
-    return error, v_tilt
+    return cost, v_barre
 
 
 
-def __addition_tuple(v1,v2):
-        v1_x = v1[0]
-        v1_y = v1[1]
-        v1_z = v1[2]
-
-        v2_x = v2[0]
-        v2_y = v2[1]
-        v2_z = v2[2]
-
-        v =  ( v1_x + v2_x, v1_y + v2_y, v1_z + v2_z )
-        return v
-
-def __division_tuple(v1,diviseur):
-        v1_x = v1[0] / 2
-        v1_y = v1[1] / 2
-        v1_z = v1[2] / 2
-
-        v =  (v1_x, v1_y, v1_z)
-        return v
+# def __addition_tuple(v1,v2):
+#         v1_x = v1[0]
+#         v1_y = v1[1]
+#         v1_z = v1[2]
+# 
+#         v2_x = v2[0]
+#         v2_y = v2[1]
+#         v2_z = v2[2]
+# 
+#         v =  ( v1_x + v2_x, v1_y + v2_y, v1_z + v2_z )
+#         return v
+# 
+# def __division_tuple(v1,diviseur):
+#         v1_x = v1[0] / 2
+#         v1_y = v1[1] / 2
+#         v1_z = v1[2] / 2
+# 
+#         v =  (v1_x, v1_y, v1_z)
+#         return v
         
 def main():
     obj = 'bunny_origin.obj'
