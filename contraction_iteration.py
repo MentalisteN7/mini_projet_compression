@@ -6,6 +6,8 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
     """
     Réalise une itération de l'étape 5
     """
+    instructions = []    
+
     toContract = pairQueue.pop(deletedVertices)
     v1_ind = toContract[0]
     v2_ind = toContract[1]
