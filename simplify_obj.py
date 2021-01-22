@@ -1,7 +1,7 @@
 from obj_loader import ObjLoader
 import numpy as np
 
-def simplify_obj(listInstruction, pathIn = 'bunny_origin.obj'):
+def simplifyObj(listInstruction, pathIn = 'bunny_origin.obj'):
     obj = ObjLoader(pathIn)
 
     for instruction in listInstruction:
