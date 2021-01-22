@@ -34,7 +34,7 @@ def get_optimal_contraction(v1,v2,q1,q2):
         aux = v_tilt.dot(q_inv)
         error = aux.dot(v_trans)
 
-    return error
+    return error, v_tilt
 
 
 
