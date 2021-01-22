@@ -37,8 +37,10 @@ class ObjLoader(object):
 
     def toOBJ(self):
         obj = []
+        # SIZES = {"v": 13, "f": 4, "ev":14, "tv":14, "ef": 5, "efv": 4, "df":1, "ts": 6, "tf": 7, "s": 0, "#": 0}
         for vertex in self.vertices:
             obj += ['v ' + str(vertex)[1:-1]]
         for face in self.faces:
             obj += ['f ' + str(face).replace(",", "")[1:-1]]
+        obj += ['s ' + str(len(self.vertices)*13 + len(self.faces)*4)]
         return obj
