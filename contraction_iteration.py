@@ -29,11 +29,17 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
     voisinage_v2 = validPairs.voisin_per_vertex.get(v2_ind)
     for voisin in voisinage_v2 :
         voisinage_voisin =  validPairs.voisin_per_vertex[voisin]
-        instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[voisinage_voisin.index(v2_ind)])]
         voisinage_voisin.remove(v2_ind)
         if not (v1_ind in voisinage_voisin): #on évite les redondances
             voisinage_voisin.append(v1_ind)
         validPairs.voisin_per_vertex[voisin] = voisinage_voisin
+    ################ Bloc Instruction ################
+    instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[v2_ind])]
+    for i in range(len(model.faces)):
+        face = model.faces[i]
+        if v2_ind in face:
+            instructions += ['df ' + str(i) + ' ' + faceTxt(face)]
+    ##################################################
     deletedVertices.append(v2_ind)
     
     #v1 reçoit les voisins de v2
