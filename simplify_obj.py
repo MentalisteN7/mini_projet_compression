@@ -13,7 +13,9 @@ def simplifyObj(listInstruction, pathIn = 'bunny_origin.obj'):
             listI = instruction.split()
             indiceFace = int(listI.pop(1)) - 1
             indice123  = int(listI.pop(1)) - 1
-            obj.faces[indiceFace][indice123] = int(listI.pop(1))
+            meh = np.array(obj.faces[indiceFace])
+            meh[indice123] = int(listI.pop(1))
+            obj.faces[indiceFace] = meh
 
         elif instruction[:2] == "v ":
             # Declare vertex
