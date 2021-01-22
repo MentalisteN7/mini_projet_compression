@@ -14,7 +14,7 @@ def simplifyObj(listInstruction, pathIn = 'bunny_origin.obj'):
             indiceFace = int(listI.pop(1)) - 1
             indice123  = int(listI.pop(1)) - 1
             indiceVertex = obj.faces[indiceFace][indice123]
-            vertex = np.array([float(listI[i]) for i in range(1,len(listI))])
+            vertex = np.array([float(listI[i]) for i in range(1,4)])
             obj.vertices[indiceVertex] = vertex
 
         elif instruction[:2] == "v ":
@@ -28,7 +28,7 @@ def simplifyObj(listInstruction, pathIn = 'bunny_origin.obj'):
             # Declare face
 
             listI = instruction.split()
-            face = np.array([int(listI[i]) for i in range(1,len(listI))])
+            face = np.array([int(listI[i]) for i in range(1,4)])
             obj.faces.append(tuple(face))
 
         elif instruction[:2] == "ev":
@@ -36,7 +36,7 @@ def simplifyObj(listInstruction, pathIn = 'bunny_origin.obj'):
             
             listI = instruction.split()
             indice = int(listI.pop(1)) - 1
-            vertex = np.array([float(listI[i]) for i in range(1,len(listI))])
+            vertex = np.array([float(listI[i]) for i in range(1,4)])
             obj.vertices[indice] = vertex
             
         elif instruction[:2] == "dv":
@@ -59,7 +59,7 @@ def simplifyObj(listInstruction, pathIn = 'bunny_origin.obj'):
             
             listI = instruction.split()
             indice = int(listI.pop(1)) - 1
-            face = np.array([int(listI[i]) for i in range(1,len(listI))])
+            face = np.array([int(listI[i]) for i in range(1,4)])
             obj.vertices[indice] = face
             
         elif instruction[:2] == "df":
