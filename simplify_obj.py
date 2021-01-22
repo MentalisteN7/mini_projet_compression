@@ -13,7 +13,7 @@ def simplifyObj(listInstruction, pathIn = 'bunny_origin.obj'):
             listI = instruction.split()
             indiceFace = int(listI.pop(1)) - 1
             indice123  = int(listI.pop(1)) - 1
-            indiceVertex = obj.faces[indiceFace][indice123]
+            indiceVertex = obj.faces[indiceFace][indice123] - 1
             vertex = np.array([float(listI[i]) for i in range(1,4)])
             obj.vertices[indiceVertex] = vertex
 
