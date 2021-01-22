@@ -50,6 +50,7 @@ class ObjLoader(object):
             obj += ['v ' + verticeTxt(vertex)]
         for face in self.faces:
             if face != None:
+            # if face.all() != None:
                 obj += ['f ' + faceTxt(face)]
         obj += ['s ' + str(len(self.vertices)*13 + len(self.faces)*4)]
         return obj
