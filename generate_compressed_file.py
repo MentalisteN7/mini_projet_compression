@@ -1,5 +1,3 @@
-from shutil import copyfile
-
 from obj_loader import ObjLoader
 from getListQ import getListQ, getListKp
 from infoVertexVoisin import infoVertexVoisin
@@ -11,7 +9,7 @@ from contraction_iteration import contraction_iteration
 
 def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origin_compress.obj', targetSize=100, treshold=0, ):
     obj = ObjLoader(pathIn)
-    
+
     #1. Compute the Q matrices for all the initial vertices.
     listKp = getListKp(obj)
     listQ = getListQ(obj, listKp)
