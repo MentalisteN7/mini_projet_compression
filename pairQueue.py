@@ -30,15 +30,15 @@ class PairQueue():
                 pair = pairCand
                 done = True
             else:
-                print('Le haut de la file était pas clean')
+                print('Le haut de la file était pas clean', pairCand)
                 done = self.isEmpty()
-        self.cleanTop(deletedVertices)
+        # self.cleanFront(deletedVertices)
         return pair
             
     def isEmpty(self):
         return self.heap == []
     
-    def cleanTop(self, deletedVertices):
+    def cleanFront(self, deletedVertices):
         done = self.isEmpty()
         while not done:
             popped = heapq.heappop(self.heap)

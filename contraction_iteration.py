@@ -44,6 +44,8 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
             instructions += ['df ' + str(i) + ' ' + faceTxt(face)]
     ##################################################
     deletedVertices.append(v2_ind)
+    #Les paires qui sont devenues invalides et qui sont à l'avant de la file sont nettoyées
+    pairQueue.cleanFront(deletedVertices)
     
     #v1 reçoit les voisins de v2
     voisinage_v1 = validPairs.voisin_per_vertex[v1_ind]
@@ -59,5 +61,7 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
         Qvoisin = Qlist[voisin_ind-1]
         cost, v_bar =  get_optimal_contraction(v1, voisin, Q1, Qvoisin)
         pairQueue.push((v1_ind, voisin_ind, v_bar), cost)
+    # print('Le tas :',pairQueue.heap)
+    # print('Les supprimés :', deletedVertices)
     
     return model, Qlist, validPairs, pairQueue, deletedVertices
