@@ -1,6 +1,11 @@
 import heapq
 
 class PairQueue():
+    """
+    File de priorité pour les paires de sommet
+    Les paires de plus faible coût sont prioritaires
+    Les paires sont adjointes du sommet qui sert à les contracter
+    """
     
     def __init__(self, pairList, costList):
         self.heap = []

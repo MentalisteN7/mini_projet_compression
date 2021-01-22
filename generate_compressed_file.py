@@ -24,13 +24,13 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     #4. Place all the pairs in a heap keyed on cost with the minimum cost pair at the top.
     pairQueue = PairQueue([], [])
     for v1_ind in range(len(obj.vertices)):
-        v1 = obj.vertices(v1_ind)
+        v1 = obj.vertices[v1_ind]
         Q1 = listQ[v1_ind]
         for v2_ind in validPairs.dic_voisins:
             v2 = obj.vertices[v2_ind-1] #les indices en python commencent à 0 mais ceux des .obj commencent à 1
             Q2 = listQ[v2_ind-1]
-            cost, _ = get_optimal_contraction(v1, v2, Q1, Q2)
-            pairQueue.push((v1_ind+1,v2_ind, cost))
+            cost, v_bar = get_optimal_contraction(v1, v2, Q1, Q2)
+            pairQueue.push((v1_ind+1,v2_ind, v_bar), cost)
     
     #5. Iteratively remove the pair (v1;v2) of least cost from the heap,contract this pair
     deletedVertices = []
