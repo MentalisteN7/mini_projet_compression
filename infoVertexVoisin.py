@@ -29,45 +29,46 @@ class infoVertexVoisin():
                 self.dic_voisins[first_vertex] = [second_vertex]
                 self.dic_voisins[first_vertex] = self.dic_voisins[first_vertex] + [third_vertex]
 
-
-                self.voisin_per_vertex[first_vertex] = [second_vertex]
-                self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [third_vertex]
+                # self.voisin_per_vertex[first_vertex] = [second_vertex]
+                # self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [third_vertex]
             
             else:
                 is_second_vertex_in_first = second_vertex in voisins_first
                 if not(is_second_vertex_in_first):
                     self.dic_voisins[first_vertex] = self.dic_voisins[first_vertex] + [second_vertex]
 
-                    self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [second_vertex]
+                    # self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [second_vertex]
 
                 is_third_vertex_in_first = third_vertex in voisins_first
                 if not(is_third_vertex_in_first):
                     self.dic_voisins[first_vertex] = self.dic_voisins[first_vertex] + [third_vertex]
 
-                    self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [third_vertex]
+                    # self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [third_vertex]
 
             voisins_second = self.dic_voisins.get(second_vertex)
             if voisins_second == None:
                 self.dic_voisins[second_vertex] = [third_vertex]
 
-                self.voisin_per_vertex[second_vertex] = [first_vertex]
-                self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [third_vertex]
+                # self.voisin_per_vertex[second_vertex] = [first_vertex]
+                # self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [third_vertex]
             
             else:
                 is_third_vertex_in_second = third_vertex in voisins_second
                 if not(is_third_vertex_in_second):
                     self.dic_voisins[second_vertex] = self.dic_voisins[second_vertex] + [third_vertex]
 
-                    self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [third_vertex]
+                    # self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [third_vertex]
                 
                 voisins_vertex_first = self.voisin_per_vertex.get(first_vertex)
                 if voisins_vertex_first == None:
                     # On ne passe normalement jamais dans cette boucle
-                    self.voisin_per_vertex[second_vertex] = [first_vertex]
+                    # self.voisin_per_vertex[second_vertex] = [first_vertex]
+                    pass
                 else:
                     is_first_vertex_in_second = third_vertex in voisins_vertex_first
                     if not(is_first_vertex_in_second):
-                        self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [first_vertex]
+                        # self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [first_vertex]
+                        pass
 
             #### set voisins of the third vertex
             voisins_third = self.voisin_per_vertex.get(third_vertex)
@@ -84,6 +85,37 @@ class infoVertexVoisin():
                 if not(is_second_vertex_in_third):
                     self.voisin_per_vertex[third_vertex] = self.voisin_per_vertex[third_vertex] + [second_vertex]
 
+
+            #### set voisins of the second vertex
+            voisins_second = self.voisin_per_vertex.get(second_vertex)
+            if voisins_second == None:
+                self.voisin_per_vertex[second_vertex] = [first_vertex]
+                self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [third_vertex]
+            
+            else:
+                is_first_vertex_in_second = first_vertex in voisins_second
+                if not(is_first_vertex_in_second):
+                    self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [first_vertex]
+
+                is_third_vertex_in_second = third_vertex in voisins_second
+                if not(is_third_vertex_in_second):
+                    self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [third_vertex]
+        
+
+            #### set voisins of the first vertex
+            voisins_first = self.voisin_per_vertex.get(first_vertex)
+            if voisins_first == None:
+                self.voisin_per_vertex[first_vertex] = [second_vertex]
+                self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [third_vertex]
+            
+            else:
+                is_second_vertex_in_first = second_vertex in voisins_first
+                if not(is_second_vertex_in_first):
+                    self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [second_vertex]
+
+                is_third_vertex_in_first = third_vertex in voisins_first
+                if not(is_third_vertex_in_first):
+                    self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [third_vertex]
     
     def __norm_tuple(self,v1,v2):
         v1_x = v1[0]
@@ -100,7 +132,7 @@ class infoVertexVoisin():
 
     def init_proche(self, lapin):
 
-        vertices_left = lapin.vertices
+        vertices_left = lapin.vertices.copy()
 
         ind_v1 = 1
         ind_v2 = 1
@@ -128,9 +160,8 @@ class infoVertexVoisin():
 
 
 def main():
-    obj = 'bunny_origin.obj'
+    obj = 'assets/triangle.obj'
     lapin = ObjLoader(obj)
-    print(lapin.vertices[lapin.faces[0][0]])
 
     nb_vertices = len(lapin.vertices)
 
@@ -141,13 +172,13 @@ def main():
     v1 = lapin.vertices[0]
     v2 = lapin.vertices[1]
     # d = valid_pair_instance.norm_tuple(v1,v2)
-    print(lapin.vertices[0])
 
     valid_pair_instance.init_proche(lapin)
-    print(len(valid_pair_instance.dic_voisins))
-    print('len(valid_pair_instance.voisin_per_vertex) = ', len(valid_pair_instance.voisin_per_vertex))
-    print('len(valid_pair_instance.dic_proches) = ', len(valid_pair_instance.dic_proches))
-    print('(valid_pair_instance.dic_proches) = ', (valid_pair_instance.dic_proches))
+    # print(len(valid_pair_instance.dic_voisins))
+    # print('len(voisin_per_vertex) = ', len(valid_pair_instance.voisin_per_vertex))
+    # print('(voisin_per_vertex) = ', (valid_pair_instance.voisin_per_vertex))
+    # print('len(valid_pair_instance.dic_proches) = ', len(valid_pair_instance.dic_proches))
+    # print('(valid_pair_instance.dic_proches) = ', (valid_pair_instance.dic_proches))
 
 if __name__ == "__main__":
     # execute only if run as a script

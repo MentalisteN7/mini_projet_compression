@@ -5,7 +5,7 @@ def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
     """
     Réalise une itération de l'étape 5
     """
-    toContract = pairQueue.pop()
+    toContract = pairQueue.pop(deletedVertices)
     v1_ind = toContract[0]
     v2_ind = toContract[1]
     v_bar = toContract[2]
@@ -21,9 +21,13 @@ def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
     Qlist[v1_ind] = Q1 + Q2
     
     #suppression des références à v2
+    print('v2_ind = ', v2_ind)
     voisinage_v2 = validPairs.voisin_per_vertex.get(v2_ind)
+    print('voisinage_v2 = ', voisinage_v2)
     for voisin in voisinage_v2 :
+        print('voisin = ', voisin)
         voisinage_voisin =  validPairs.voisin_per_vertex[voisin]
+        print('voisinage_voisin = ', voisinage_voisin)
         voisinage_voisin.remove(v2_ind)
         if not (v1_ind in voisinage_voisin): #on évite les redondances
             voisinage_voisin.append(v1_ind)
