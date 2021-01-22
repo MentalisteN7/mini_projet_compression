@@ -39,7 +39,8 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     deletedVertices = []
     numVertices = len(obj.vertices)
     while (numVertices > targetSize) and (not pairQueue.isEmpty) :
-        contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices)
+        obj, listQ, validPairs, pairQueue, deletedVertices = \
+            contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices)
         numVertices -= 1
     
 
