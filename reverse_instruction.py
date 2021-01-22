@@ -46,7 +46,7 @@ def reverseInstruction(listInstruction):
             x_coord = instruction_array[2]
             y_coord = instruction_array[3]
             z_coord = instruction_array[4]
-            newInstruct = "tv " + indice_element + ' -' + x_coord + " -" + y_coord + " -" + z_coord
+            newInstruct = "tv " + indice_element + str(-float(x_coord)) + str(-float(y_coord)) + str(-float(z_coord))
             pass
 
         elif command == "ef":
