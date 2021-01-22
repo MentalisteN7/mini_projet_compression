@@ -1,10 +1,14 @@
 from pairQueue import PairQueue
 from get_optimal_contraction import get_optimal_contraction
+from obj_loader import ObjLoader, verticeTxt, faceTxt
 
-def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
+def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, deletedVertices):
     """
     Réalise une itération de l'étape 5
     """
+
+    instructions = []
+
     toContract = pairQueue.pop()
     v1_ind = toContract[0]
     v2_ind = toContract[1]
@@ -17,6 +21,7 @@ def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
     # _, v_bar = get_optimal_contraction(v1,v2, Q1, Q2) #ou v_bar = v_bar_list[indice] si on choisit de les stocker
     
     #v1 devient  v_bar
+    instructions += ['ev ' + str(v1_ind) + ' ' + verticeTxt(v_bar) + ' ' + verticeTxt(model.vertices[v1_ind-1])]
     model.vertices[v1_ind-1] = v_bar
     Qlist[v1_ind] = Q1 + Q2
     
@@ -24,6 +29,7 @@ def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
     voisinage_v2 = validPairs.voisin_per_vertex.get(v2_ind)
     for voisin in voisinage_v2 :
         voisinage_voisin =  validPairs.voisin_per_vertex[voisin]
+        instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[voisinage_voisin.index(v2_ind)])]
         voisinage_voisin.remove(v2_ind)
         if not (v1_ind in voisinage_voisin): #on évite les redondances
             voisinage_voisin.append(v1_ind)

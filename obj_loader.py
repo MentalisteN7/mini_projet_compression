@@ -48,10 +48,10 @@ class ObjLoader(object):
                 i += 1
         
         for vertex in self.vertices:
-            obj += ['v ' + str(vertex)[1:-1]]
+            obj += ['v ' + verticeTxt(vertex)]
         for face in self.faces:
             if face != None:
-                obj += ['f ' + str(face).replace(",", "")[1:-1]]
+                obj += ['f ' + faceTxt(face)]
         obj += ['s ' + str(len(self.vertices)*13 + len(self.faces)*4)]
         return obj
 
@@ -63,3 +63,9 @@ def calculS(listInstruction) -> str:
         if len(inst.split()) > 0:
             taille += SIZES[inst.split()[0]]
     return 's ' + str(taille)
+
+def verticeTxt(self, vertex) -> str:
+    return str(vertex)[1:-1]
+
+def faceTxt(self, face) -> str:
+    return str(face).replace(",", "")[1:-1]
