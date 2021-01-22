@@ -67,4 +67,6 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
 
     return 1
 
-generate_compressed_file()
+
+# generate_compressed_file()
+generate_compressed_file(pathIn='assets/triangle.obj')
