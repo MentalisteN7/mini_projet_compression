@@ -20,7 +20,8 @@ def get_optimal_contraction(v1,v2,q1,q2):
         vect_un = [0, 0, 0, 1]
         v_barre = q_inv.dot(vect_un)
         cost = v_barre.dot(q_barre).dot(v_barre.transpose())
-        v_barre = v_barre[0:3] #on ne veut pas la représentation homogène
+        cost = cost.item()
+        v_barre = np.squeeze(np.asarray(v_barre))[0:3] #on ne veut pas la représentation homogène
     
     #Si cela aussi échoue, choisir v_barre parmi les extrémités ou le milieu
     else:
@@ -35,7 +36,7 @@ def get_optimal_contraction(v1,v2,q1,q2):
             if costi < cost:
                 cost = costi
                 imin = i
-        v_barre = candidats[i]
+        v_barre = candidats[imin]
         
     
 
@@ -84,8 +85,9 @@ def main():
     v2_ind = v_pair_ind[1]
     v1 = lapin.vertices[v1_ind]
     v2 = lapin.vertices[v2_ind]
-    error = get_optimal_contraction(v1,v2,q1,q2)
-    print('error = ', error)
+    cost, v_barre = get_optimal_contraction(v1,v2,q1,q2)
+    print('cost = ', cost)
+    print('v_barre', v_barre)
     # test =  np.asarray(lapin.vertices)
     # print(test)
     # print(lapin.faces)
