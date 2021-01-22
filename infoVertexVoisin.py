@@ -10,8 +10,9 @@ class infoVertexVoisin():
         self.dic_voisins = {} # Stock les voisins des vertex, pas de doublon, donc derniers vertex (en indice), n'auront "pas de voisins" car déjà pris en compte dans les premiers
 
         self.proches = []
+        self.dic_proches = {}
         self.voisin_per_vertex = {} # Stock tous les voisins de chaque vertex
-        self.treshold = 1
+        self.treshold = 0.1
 
     def init_voisin(self, lapin):
     # Construction de dic_voisins et voisin_per_vertex
@@ -106,27 +107,23 @@ class infoVertexVoisin():
 
         for v1 in lapin.vertices:
             for v2 in vertices_left:
+
+                voisins_v1 = self.dic_proches.get(ind_v1)
+
                 distance = self.__norm_tuple(v1,v2)
 
                 if (distance > 0 and distance < self.treshold):
-                    self.proches.append((ind_v1, ind_v2))
-                    # self.proches.append((ind_v2, ind_v1))
+                    if voisins_v1 == None:
+                        self.dic_proches[ind_v1] = [ind_v2]
+                    else:
+                        is_v2_vertex_in_v1 = ind_v2 in voisins_v1
+                        if not(is_v2_vertex_in_v1):
+                            self.dic_proches[ind_v1] = self.dic_proches[ind_v1] + [ind_v2]
 
                 ind_v2 = ind_v2 + 1
-
             ind_v1 = ind_v1 + 1
+
             del vertices_left[-1] # On ne repasse pas sur les premiers vertex déjà traités
-
-        def init_voisin_per_vertex(self, lapin):
-            k = 0
-            
-            for face in lapin.faces:
-                # if True:
-                k = k + 1
-                first_vertex = face[0]
-                second_vertex = face[1]
-                third_vertex = face[2]
-
 
 
 
@@ -147,10 +144,10 @@ def main():
     print(lapin.vertices[0])
 
     valid_pair_instance.init_proche(lapin)
-    print(len(valid_pair_instance.proches))
     print(len(valid_pair_instance.dic_voisins))
     print('len(valid_pair_instance.voisin_per_vertex) = ', len(valid_pair_instance.voisin_per_vertex))
-    # print((valid_pair_instance.dic_voisins))
+    print('len(valid_pair_instance.dic_proches) = ', len(valid_pair_instance.dic_proches))
+    print('(valid_pair_instance.dic_proches) = ', (valid_pair_instance.dic_proches))
 
 if __name__ == "__main__":
     # execute only if run as a script
