@@ -44,3 +44,12 @@ class ObjLoader(object):
             obj += ['f ' + str(face).replace(",", "")[1:-1]]
         obj += ['s ' + str(len(self.vertices)*13 + len(self.faces)*4)]
         return obj
+
+def calculS(listInstruction) -> str:
+    SIZES = {"v": 13, "f": 4, "ev":14, "tv":14, "ef": 5, "efv": 4, "df":1, "ts": 6, "tf": 7, "s": 0, "#": 0}
+    taille = 0
+    for inst in listInstruction:
+        inst.replace("\n", "")
+        if len(inst.split()) > 0:
+            taille += SIZES[inst.split()[0]]
+    return 's ' + str(taille) 
