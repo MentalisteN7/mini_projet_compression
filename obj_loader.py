@@ -38,10 +38,20 @@ class ObjLoader(object):
     def toOBJ(self):
         obj = []
         # SIZES = {"v": 13, "f": 4, "ev":14, "tv":14, "ef": 5, "efv": 4, "df":1, "ts": 6, "tf": 7, "s": 0, "#": 0}
+        
+        i = 0
+        while i < len(self.vertices):
+            if self.vertices[i] == None:
+                self.faces = [(e[0]-1, e[1]-1, e[2]-1) for e in self.faces]
+                self.vertices.pop(i)
+            else :
+                i += 1
+        
         for vertex in self.vertices:
             obj += ['v ' + str(vertex)[1:-1]]
         for face in self.faces:
-            obj += ['f ' + str(face).replace(",", "")[1:-1]]
+            if face != None:
+                obj += ['f ' + str(face).replace(",", "")[1:-1]]
         obj += ['s ' + str(len(self.vertices)*13 + len(self.faces)*4)]
         return obj
 
