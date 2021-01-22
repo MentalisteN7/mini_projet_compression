@@ -1,4 +1,4 @@
-from obj_loader import ObjLoader
+from obj_loader import ObjLoader, calculS
 from getListQ import getListQ, getListKp
 from infoVertexVoisin import infoVertexVoisin
 from get_optimal_contraction import get_optimal_contraction
@@ -54,6 +54,10 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
 
     debut = simplifyObj(listInstruction, pathIn)
     fin   = reverseInstruction(listInstruction)
+    for i in range(1,10):
+        ind = int(i * len(fin)/10)
+        fin.insert(ind, calculS(fin[:ind]))
+    fin.append(calculS(fin))
     instructions = debut + fin
     
     obj_file_compress = open(pathOut, 'w')
