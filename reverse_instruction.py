@@ -66,7 +66,7 @@ def reverseInstruction(listInstruction):
             newInstruct = "f " + indice_element + x_coord + y_coord + z_coord
 
             pass
-        
+
         elif command == "s":
             # Set memory
             # Balise utile pour certain papier, délire de bits, tout ça...
@@ -75,7 +75,7 @@ def reverseInstruction(listInstruction):
             # Pour compter la taille de vos fichiers (balises "s" dans vos codes), vous pouvez utiliser le dictionnaire suivant.
             # SIZES = {"v": 13, "f": 4, "ev":14, "tv":14, "ef": 5, "efv": 4, "df":1, "ts": 6, "tf": 7, "s": 0, "#": 0}
             # Inverse: Retirer memory
-            newInstruct = "s " + indice_element
+            newInstruct = "s " + '-' + indice_element
             pass
         else:
             print('Unexpected value in reverse instruction')
