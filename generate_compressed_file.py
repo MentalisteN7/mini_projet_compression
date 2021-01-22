@@ -6,11 +6,13 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     copyfile(pathIn, pathOut)
 
     obj_file_compress = open(pathOut, 'a')
-    
-    obj_file_compress.write('1ere ligne à ajouter\n')
-    obj_file_compress.writelines(['2eme ligne à ajouter\n', '3eme ligne à ajouter\n'])
 
+    instructions = ['1ere ligne à ajouter', '2eme ligne à ajouter', '3eme ligne à ajouter']
+
+    instructions = [e + '\n' for e in instructions]
+    obj_file_compress.writelines(instructions)
     obj_file_compress.close()
+
     return 1
 
 # generate_compressed_file()

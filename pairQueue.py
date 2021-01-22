@@ -20,4 +20,4 @@ class PairQueue():
         return pair
             
     def isEmpty(self):
-        return self.heap == [] 
+        return self.heap == []

@@ -1,7 +1,7 @@
-def reverseInstruction(listInstruction):
-    """listInstruction = ['v -0.01 -0.99 0.79', 'f 165 95 99'] """
+from obj_loader import ObjLoader
+from shutil import copyfile
 
-    reversedInstructions = [str] * len(listInstruction)
+def simplify_obj(pathIn = 'bunny_origin.obj', listInstruction):
     for i in range(len(listInstruction)):
         instruction = listInstruction[i]
         newInstruct = instruction
