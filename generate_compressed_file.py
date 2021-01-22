@@ -5,15 +5,12 @@ from getListQ import getListQ, getListKp
 from infoVertexVoisin import infoVertexVoisin
 from get_optimal_contraction import get_optimal_contraction
 from pairQueue import PairQueue
+from simplify_obj import simplifyObj
+from reverse_instruction import reverseInstruction
 
 def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origin_compress.obj', targetSize=100, treshold=0, ):
     obj = ObjLoader(pathIn)
-    copyfile(pathIn, pathOut)
-
-    obj_file_compress = open(pathOut, 'a')
-
-    instructions = ['1ere ligne à ajouter', '2eme ligne à ajouter', '3eme ligne à ajouter']
-
+    
     #1. Compute the Q matrices for all the initial vertices.
     listKp = getListKp(obj)
     listQ = getListQ(obj, listKp)
@@ -43,7 +40,13 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
             contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices)
         numVertices -= 1
     
+    listInstruction = ['v -0.01 -0.99 0.79', 'f 165 95 99', 'ev 1 -0.01 -0.98 0.79']
 
+    debut = simplifyObj(listInstruction, pathIn)
+    fin   = reverseInstruction(listInstruction)
+    instructions = debut + fin
+    
+    obj_file_compress = open(pathOut, 'w')
     instructions = [e + '\n' for e in instructions]
     obj_file_compress.writelines(instructions)
     obj_file_compress.close()
