@@ -22,13 +22,13 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     #4. Place all the pairs in a heap keyed on cost with the minimum cost pair at the top.
     pairQueue = PairQueue([], [])
     for v1_ind in range(len(obj.vertices)):
-        v1 = obj.vertices(v1_ind)
+        v1 = obj.vertices[v1_ind]
         Q1 = listQ[v1_ind]
         for v2_ind in validPairs.dic_voisins:
             v2 = obj.vertices[v2_ind-1] #les indices en python commencent à 0 mais ceux des .obj commencent à 1
             Q2 = listQ[v2_ind-1]
-            cost, _ = get_optimal_contraction(v1, v2, Q1, Q2)
-            pairQueue.push((v1_ind+1,v2_ind, cost))
+            cost, v_bar = get_optimal_contraction(v1, v2, Q1, Q2)
+            pairQueue.push((v1_ind+1,v2_ind, v_bar), cost)
     
     #5. Iteratively remove the pair (v1;v2) of least cost from the heap,contract this pair
     deletedVertices = []
@@ -38,8 +38,17 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
             contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices)
         numVertices -= 1
     
-    listInstruction = ['v -0.01 -0.99 0.79', 'f 165 95 99', 'ev 1 -0.01 -0.98 0.79']
-
+    
+    efv = 'efv 1 3 4'
+    v = 'v 0.0 0.0 0.0'
+    f = 'f 1 2 3'
+    ev = 'ev 453 -0.01 -0.98 0.79 -0.01 -0.45 0.58'
+    tv = 'tv 1 1.0 1.0 1.0'
+    ef = 'ef 1 1 2 4 1 2 3'
+    df = 'df 1 1 2 4'
+    s = 's 48'
+    listInstruction = [efv, v, f, ev, tv, ef, df, s]
+    
     debut = simplifyObj(listInstruction, pathIn)
     fin   = reverseInstruction(listInstruction)
     instructions = debut + fin
@@ -51,4 +60,4 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
 
     return 1
 
-# generate_compressed_file()
+generate_compressed_file()

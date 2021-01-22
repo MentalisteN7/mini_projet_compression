@@ -2,15 +2,19 @@ from pairQueue import PairQueue
 from get_optimal_contraction import get_optimal_contraction
 
 def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
+    """
+    Réalise une itération de l'étape 5
+    """
     toContract = pairQueue.pop()
     v1_ind = toContract[0]
     v2_ind = toContract[1]
+    v_bar = toContract[2]
     
     v1 = model.vertices[v1_ind-1]
     v2 = model.vertices[v2_ind-1]
     Q1 = Qlist[v1_ind-1]
     Q2 = Qlist[v2_ind-1]
-    _, v_bar = get_optimal_contraction(v1,v2, Q1, Q2) #ou v_bar = v_bar_list[indice] si on choisit de les stocker
+    # _, v_bar = get_optimal_contraction(v1,v2, Q1, Q2) #ou v_bar = v_bar_list[indice] si on choisit de les stocker
     
     #v1 devient  v_bar
     model.vertices[v1_ind-1] = v_bar
@@ -38,7 +42,7 @@ def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
         voisin = model.vertices[voisin_ind-1]
         Q1 = Qlist[v1_ind-1]
         Qvoisin = Qlist[voisin_ind-1]
-        cost, _ =  get_optimal_contraction(v1, voisin, Q1, Qvoisin)
-        pairQueue.push((v1_ind, voisin_ind), cost)
+        cost, v_bar =  get_optimal_contraction(v1, voisin, Q1, Qvoisin)
+        pairQueue.push((v1_ind, voisin_ind, v_bar), cost)
     
     return model, Qlist, validPairs, pairQueue, deletedVertices
