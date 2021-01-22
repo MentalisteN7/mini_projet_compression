@@ -34,3 +34,11 @@ class ObjLoader(object):
             f.close()
         except IOError:
             print(".obj file not found.")
+
+    def toOBJ(self):
+        obj = []
+        for vertex in self.vertices:
+            obj += ['v ' + str(vertex)[1:-1]]
+        for face in self.faces:
+            obj += ['f ' + str(face).replace(",", "")[1:-1]]
+        return obj

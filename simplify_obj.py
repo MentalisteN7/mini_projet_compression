@@ -1,39 +1,75 @@
 from obj_loader import ObjLoader
 from shutil import copyfile
+import numpy as np
 
-def simplify_obj(pathIn = 'bunny_origin.obj', listInstruction):
-    for i in range(len(listInstruction)):
-        instruction = listInstruction[i]
-        newInstruct = instruction
+def simplify_obj(listInstruction, pathIn = 'bunny_origin.obj'):
+    obj = ObjLoader(pathIn)
+
+    for instruction in listInstruction:
         
         if instruction[:3] == "efv":
             # Edit vertice from face (n°vertice in [1,2,3])
             # 'efv n°face n°vertice new_value
-            pass
+            
+            listI = instruction.split()
+            indiceFace = int(listI.pop(1)) - 1
+            indice123  = int(listI.pop(1)) - 1
+            indiceVertice = obj.faces[indiceFace][indice123]
+            vertex = np.array([float(listI[i]) for i in range(1,len(listI))])
+            obj.vertices[indiceVertice] = vertex
 
         elif instruction[:2] == "v ":
-            pass
+            # Declare vertice
+            
+            listI = instruction.split()
+            vertex = np.array([float(listI[i]) for i in range(1,len(listI))])
+            obj.vertices.append(vertex)
 
         elif instruction[:2] == "f ":
-            pass
+            # Declare face
+
+            listI = instruction.split()
+            face = np.array([int(listI[i]) for i in range(1,len(listI))])
+            obj.faces.append(tuple(face))
 
         elif instruction[:2] == "ev":
             # Edit vertice
-            pass
+            
+            listI = instruction.split()
+            indice = int(listI.pop(1)) - 1
+            vertex = np.array([float(listI[i]) for i in range(1,len(listI))])
+            obj.vertices[indice] = vertex
+            
         elif instruction[:2] == "tv":
             # Translate vertice
-            pass
+            
+            listI = instruction.split()
+            indice = int(listI.pop(1)) - 1
+            vertex = np.array([float(listI[i]) for i in range(1,len(listI))])
+            obj.vertices[indice] += vertex
+
         elif instruction[:2] == "ef":
             # Edit face
-            pass
+            
+            listI = instruction.split()
+            indice = int(listI.pop(1)) - 1
+            face = np.array([int(listI[i]) for i in range(1,len(listI))])
+            obj.vertices[indice] = face
+            
         elif instruction[:2] == "df":
             # Delete face
-            pass
+            
+            listI = instruction.split()
+            indice = int(listI.pop(1)) - 1
+            obj.faces[indice] = None
+
         elif instruction[:2] == "ts":
             # Triangle strips
+            print('Triangle strips was unexpected and not implemented')
             pass
         elif instruction[:2] == "tf":
             # Triangle fans
+            print('Triangle fans was unexpected and not implemented')
             pass
         elif instruction[:2] == "s ":
             # Set memory
@@ -41,8 +77,25 @@ def simplify_obj(pathIn = 'bunny_origin.obj', listInstruction):
         else:
             print('Unexpected value in reverse instruction')
 
-        reversedInstructions[-(i+1)] = newInstruct
+
     return reversedInstructions
 
-listInstruction = ['ev 453 -0.01 -0.98 0.79','df 1']
-print(reverseInstruction(listInstruction))
+def getValues(instruction):
+    a = instruction.split()
+    return np.array([float(a[i]) for i in range(1,len(a))])
+
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    # listInstruction = ['ev 453 -0.01 -0.98 0.79','df 1']
+    # print(reverseInstruction(listInstruction))
+
+    instruction = 'efv 1 165 -0.01 -0.98 0.79'
+    # 'efv n°face n°vertice new_value
+    obj = ObjLoader('bunny_origin.obj')
+    # print(indiceFace)
+    # print(indice123)
+    print(str(obj.vertices[0])[1:-1])
+    obj.toOBJ()
+    # print(indiceVertice)
+    # print(vertex)
