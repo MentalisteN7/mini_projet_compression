@@ -40,7 +40,7 @@ class ObjLoader(object):
         
         i = 0
         while i < len(self.vertices):
-            if self.vertices[i] == None:
+            if self.vertices[i].any() == None:
                 self.faces = [(e[0]-1, e[1]-1, e[2]-1) for e in self.faces]
                 self.vertices.pop(i)
             else :
@@ -63,8 +63,8 @@ def calculS(listInstruction) -> str:
             taille += SIZES[inst.split()[0]]
     return 's ' + str(taille)
 
-def verticeTxt(self, vertex) -> str:
+def verticeTxt(vertex) -> str:
     return str(vertex)[1:-1]
 
-def faceTxt(self, face) -> str:
+def faceTxt(face) -> str:
     return str(face).replace(",", "")[1:-1]
