@@ -6,7 +6,7 @@ from infoVertexVoisin import infoVertexVoisin
 from get_optimal_contraction import get_optimal_contraction
 from pairQueue import PairQueue
 
-def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origin_compress.obj', treshold=0):
+def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origin_compress.obj', targetSize=100, treshold=0, ):
     obj = ObjLoader(pathIn)
     copyfile(pathIn, pathOut)
 
@@ -34,6 +34,13 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
             Q2 = listQ[v2_ind-1]
             cost, _ = get_optimal_contraction(v1, v2, Q1, Q2)
             pairQueue.push((v1_ind+1,v2_ind, cost))
+    
+    #5. Iteratively remove the pair (v1;v2) of least cost from the heap,contract this pair
+    deletedVertices = []
+    numVertices = len(obj.vertices)
+    while (numVertices > targetSize) and (not pairQueue.isEmpty) :
+        contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices)
+        numVertices -= 1
     
 
     instructions = [e + '\n' for e in instructions]
