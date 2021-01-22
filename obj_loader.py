@@ -37,7 +37,6 @@ class ObjLoader(object):
 
     def toOBJ(self):
         obj = []
-        # SIZES = {"v": 13, "f": 4, "ev":14, "tv":14, "ef": 5, "efv": 4, "df":1, "ts": 6, "tf": 7, "s": 0, "#": 0}
         
         i = 0
         while i < len(self.vertices):
