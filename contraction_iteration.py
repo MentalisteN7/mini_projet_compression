@@ -1,4 +1,5 @@
 from pairQueue import PairQueue
+from get_optimal_contraction import get_optimal_contraction
 
 def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
     toContract = pairQueue.pop()
