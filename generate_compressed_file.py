@@ -7,6 +7,7 @@ from get_optimal_contraction import get_optimal_contraction
 from pairQueue import PairQueue
 from simplify_obj import simplifyObj
 from reverse_instruction import reverseInstruction
+from contraction_iteration import contraction_iteration
 
 def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origin_compress.obj', targetSize=100, treshold=0, ):
     obj = ObjLoader(pathIn)
@@ -35,7 +36,9 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     #5. Iteratively remove the pair (v1;v2) of least cost from the heap,contract this pair
     deletedVertices = []
     numVertices = len(obj.vertices)
-    while (numVertices > targetSize) and (not pairQueue.isEmpty) :
+    print('numVertices = ', numVertices)
+    while (numVertices > targetSize) and (not pairQueue.isEmpty()) :
+        print('coucou')
         obj, listQ, validPairs, pairQueue, deletedVertices = \
             contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices)
         numVertices -= 1
@@ -50,7 +53,7 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     df = 'df 1 1 2 4'
     s = 's 48'
     listInstruction = [efv, v, f, ev, tv, ef, df, s]
-    
+
     debut = simplifyObj(listInstruction, pathIn)
     fin   = reverseInstruction(listInstruction)
     instructions = debut + fin
