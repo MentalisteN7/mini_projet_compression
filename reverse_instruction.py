@@ -10,8 +10,8 @@ def reverseInstruction(listInstruction):
         newInstruct = instruction
         
         if command == "efv":
-            # Edit vertice from face (n°vertice in [1,2,3])
-            # 'efv n°face n°vertice new_value
+            # Edit vertex from face (n°vertex in [1,2,3])
+            # 'efv n°face n°vertex new_value
             # Prends une face, choisis un sommet, et le remplace avec un nouveau
             # Inverse: Prends une face, prends un nouveau et le remplace avec l'ancien
 
@@ -32,21 +32,29 @@ def reverseInstruction(listInstruction):
             pass
 
         elif command == "ev":
-            # Edit vertice
+            # Edit vertex
             # Inverse: ne pas éditer, donc renvoyer le vertex d'origine
             # On doit récupérer les coordonnées d'origine
             x_coord = instruction_array[5]
             y_coord = instruction_array[6]
             z_coord = instruction_array[7]
             newInstruct = 'ev ' + indice_element + ' ' + x_coord + ' ' + y_coord + ' ' + z_coord
-           
+
+        elif command == "dv":
+            # Delete vertex
+            # Inverse: Create vertex
+            x_coord = instruction_array[2]
+            y_coord = instruction_array[3]
+            z_coord = instruction_array[4]
+            newInstruct = "v " + indice_element + x_coord + y_coord + z_coord
+
         elif command == "tv":
-            # Translate vertice
+            # Translate vertex
             # Inverse: Translate in the other sens
             x_coord = instruction_array[2]
             y_coord = instruction_array[3]
             z_coord = instruction_array[4]
-            newInstruct = "tv " + indice_element + ' -' + x_coord + " -" + y_coord + " -" + z_coord
+            newInstruct = "tv " + indice_element + str(-float(x_coord)) + str(-float(y_coord)) + str(-float(z_coord))
             pass
 
         elif command == "ef":
@@ -56,16 +64,14 @@ def reverseInstruction(listInstruction):
             y_coord = instruction_array[6]
             z_coord = instruction_array[7]
             newInstruct = 'ef ' + indice_element + ' ' + x_coord + ' ' + y_coord + ' ' + z_coord
-            pass
+
         elif command == "df":
             # Delete face
             # Inverse: Create face
             x_coord = instruction_array[2]
             y_coord = instruction_array[3]
             z_coord = instruction_array[4]
-            newInstruct = "df " + indice_element + x_coord + y_coord + z_coord
-
-            pass
+            newInstruct = "f " + indice_element + x_coord + y_coord + z_coord
 
         elif command == "s":
             # Set memory

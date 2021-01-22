@@ -1,7 +1,8 @@
 from pairQueue import PairQueue
 from get_optimal_contraction import get_optimal_contraction
+from obj_loader import ObjLoader, verticeTxt, faceTxt
 
-def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
+def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, deletedVertices):
     """
     Réalise une itération de l'étape 5
     """
@@ -17,6 +18,7 @@ def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
     # _, v_bar = get_optimal_contraction(v1,v2, Q1, Q2) #ou v_bar = v_bar_list[indice] si on choisit de les stocker
     
     #v1 devient  v_bar
+    instructions += ['ev ' + str(v1_ind) + ' ' + verticeTxt(v_bar) + ' ' + verticeTxt(model.vertices[v1_ind-1])]
     model.vertices[v1_ind-1] = v_bar
     Qlist[v1_ind] = Q1 + Q2
     
@@ -32,6 +34,13 @@ def contraction_iteration(model, Qlist, validPairs, pairQueue, deletedVertices):
         if not (v1_ind in voisinage_voisin): #on évite les redondances
             voisinage_voisin.append(v1_ind)
         validPairs.voisin_per_vertex[voisin] = voisinage_voisin
+    ################ Bloc Instruction ################
+    instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[v2_ind])]
+    for i in range(len(model.faces)):
+        face = model.faces[i]
+        if v2_ind in face:
+            instructions += ['df ' + str(i) + ' ' + faceTxt(face)]
+    ##################################################
     deletedVertices.append(v2_ind)
     
     #v1 reçoit les voisins de v2
