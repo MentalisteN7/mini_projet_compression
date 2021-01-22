@@ -22,7 +22,7 @@ class PairQueue():
     def pop(self, deletedVertices):
         done = self.isEmpty()
         print('done = ', done)
-        pair = (0,0)
+        pair = (0,0,np.zeros(3))
         while not done:
             popped = heapq.heappop(self.heap)
             pairCand = popped[2]
