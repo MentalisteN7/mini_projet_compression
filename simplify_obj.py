@@ -85,3 +85,4 @@ if __name__ == "__main__":
     # listInstruction = ['ev 453 -0.01 -0.98 0.79','df 1']
     # instruction = 'efv 1 165 -0.01 -0.98 0.79'
     # obj = ObjLoader('bunny_origin.obj')
+    pass
