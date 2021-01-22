@@ -35,6 +35,8 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     deletedVertices = []
     numVertices = len(obj.vertices)
     print('numVertices = ', numVertices)
+    print('targetSize = ', targetSize)
+    print('pairQueue.isEmpty() = ', pairQueue.isEmpty())
     while (numVertices > targetSize) and (not pairQueue.isEmpty()) :
         print('coucou')
         obj, listQ, validPairs, pairQueue, deletedVertices = \
@@ -69,4 +71,4 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
 
 
 # generate_compressed_file()
-generate_compressed_file(pathIn='assets/triangle.obj')
+generate_compressed_file(pathIn='assets/triangle.obj', targetSize=1)
