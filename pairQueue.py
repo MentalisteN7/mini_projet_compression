@@ -15,7 +15,8 @@ class PairQueue():
         self.counter += 1
     
     def pop(self, deletedVertices):
-        done = not self.isEmpty()
+        done = self.isEmpty()
+        print('done = ', done)
         pair = (0,0)
         while not done:
             popped = heapq.heappop(self.heap)
@@ -29,3 +30,23 @@ class PairQueue():
             
     def isEmpty(self):
         return self.heap == []
+
+def main():
+    pair_one = [1,2]
+    pair_two = [1,3]
+    pair_three = [2,3]
+    pair_list = [pair_one, pair_two, pair_three]
+    cost_list = [4,2,3]
+    pair_queue = PairQueue(pairList=pair_list, costList=cost_list)
+
+    print('pair_queue.heap = ', pair_queue.heap)
+
+    deletedVertices = []
+    pop = pair_queue.pop(deletedVertices)
+    print('pop = ', pop)
+
+    print('coucou')
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
