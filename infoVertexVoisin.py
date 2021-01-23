@@ -23,7 +23,7 @@ class infoVertexVoisin():
             first_vertex = sorted_face[0]
             second_vertex = sorted_face[1]
             third_vertex = sorted_face[2]
-
+            print(first_vertex,second_vertex,third_vertex)
             voisins_first = self.dic_voisins.get(first_vertex)
             if voisins_first == None:
                 self.dic_voisins[first_vertex] = [second_vertex]
@@ -69,6 +69,11 @@ class infoVertexVoisin():
                     if not(is_first_vertex_in_second):
                         # self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [first_vertex]
                         pass
+            
+            voisins_third_vide = self.dic_voisins.get(third_vertex)
+            if voisins_third_vide == None:
+                self.dic_voisins[third_vertex] = []
+
 
             #### set voisins of the third vertex
             voisins_third = self.voisin_per_vertex.get(third_vertex)
@@ -174,7 +179,8 @@ def main():
     # d = valid_pair_instance.norm_tuple(v1,v2)
 
     valid_pair_instance.init_proche(lapin)
-    # print(len(valid_pair_instance.dic_voisins))
+    print((valid_pair_instance.dic_voisins))
+    # dic =
     # print('len(voisin_per_vertex) = ', len(valid_pair_instance.voisin_per_vertex))
     # print('(voisin_per_vertex) = ', (valid_pair_instance.voisin_per_vertex))
     # print('len(valid_pair_instance.dic_proches) = ', len(valid_pair_instance.dic_proches))
