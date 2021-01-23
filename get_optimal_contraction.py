@@ -13,9 +13,9 @@ def get_optimal_contraction(v1,v2,q1,q2):
     q_aux[3,:] = 0
     q_aux[3,3] = 1
     
-    conditionnement = np.linalg.cond(q_barre)
+    conditionnement = np.linalg.cond(q_aux)
     #Si q_aux est inversible, 
-    if (conditionnement < 1e5):
+    if (conditionnement < 1 / np.finfo(q_barre.dtype).eps) :
         q_inv = np.linalg.inv(q_aux)
         vect_un = [0, 0, 0, 1]
         v_barre = q_inv.dot(vect_un)
@@ -36,6 +36,7 @@ def get_optimal_contraction(v1,v2,q1,q2):
             if costi < cost:
                 cost = costi
                 imin = i
+        cost = cost.item()
         v_barre = candidats[imin]
         
     
