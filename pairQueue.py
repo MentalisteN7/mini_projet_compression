@@ -1,4 +1,5 @@
 import heapq
+import numpy as np
 
 class PairQueue():
     """
@@ -49,6 +50,14 @@ def main():
     deletedVertices = []
     pop = pair_queue.pop(deletedVertices)
     print('pop = ', pop)
+    print('pair_queue.heap = ', pair_queue.heap)
+    pop = pair_queue.pop(deletedVertices)
+    print('pop = ', pop)
+    print('pair_queue.heap = ', pair_queue.heap)
+    pop = pair_queue.pop(deletedVertices)
+    print('pop = ', pop)
+    print('pair_queue.heap = ', pair_queue.heap)
+    pop = pair_queue.pop(deletedVertices)
 
     print('coucou')
 
