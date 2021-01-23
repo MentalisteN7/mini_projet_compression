@@ -23,7 +23,7 @@ class infoVertexVoisin():
             first_vertex = sorted_face[0]
             second_vertex = sorted_face[1]
             third_vertex = sorted_face[2]
-            print(first_vertex,second_vertex,third_vertex)
+            # print(first_vertex,second_vertex,third_vertex)
             voisins_first = self.dic_voisins.get(first_vertex)
             if voisins_first == None:
                 self.dic_voisins[first_vertex] = [second_vertex]
@@ -165,7 +165,8 @@ class infoVertexVoisin():
 
 
 def main():
-    obj = 'assets/triangle.obj'
+    # obj = 'assets/triangle.obj'
+    obj = 'bunny_origin.obj'
     lapin = ObjLoader(obj)
 
     nb_vertices = len(lapin.vertices)
@@ -179,7 +180,9 @@ def main():
     # d = valid_pair_instance.norm_tuple(v1,v2)
 
     valid_pair_instance.init_proche(lapin)
-    print((valid_pair_instance.dic_voisins))
+    # print((valid_pair_instance.dic_voisins))
+    print('voisins de 30 : ', (valid_pair_instance.voisin_per_vertex[30]))
+    print('voisins de 59 : ', (valid_pair_instance.voisin_per_vertex[59]))
     # dic =
     # print('len(voisin_per_vertex) = ', len(valid_pair_instance.voisin_per_vertex))
     # print('(voisin_per_vertex) = ', (valid_pair_instance.voisin_per_vertex))

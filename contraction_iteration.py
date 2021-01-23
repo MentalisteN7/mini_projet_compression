@@ -25,19 +25,21 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
     Qlist[v1_ind] = Q1 + Q2
     
     #suppression des références à v2
-    print('v2_ind = ', v2_ind)
+    # print('v2_ind = ', v2_ind)
     voisinage_v2 = validPairs.voisin_per_vertex.get(v2_ind)
-    print('voisinage_v2 = ', voisinage_v2)
+    # print('voisinage_v2 = ', voisinage_v2)
     for voisin in voisinage_v2 :
-        print('voisin = ', voisin)
-        voisinage_voisin =  validPairs.voisin_per_vertex[voisin]
-        print('voisinage_voisin = ', voisinage_voisin)
+        # print('voisin = ', voisin)
+        # voisinage_voisin =  validPairs.voisin_per_vertex[voisin]
+        voisinage_voisin =  validPairs.voisin_per_vertex[voisin].copy()
+        # print('validPairs.voisin_per_vertex[voisin] = ', validPairs.voisin_per_vertex[voisin])
+        # print('voisinage_voisin = ', voisinage_voisin)
         voisinage_voisin.remove(v2_ind)
+        # print('validPairs.voisin_per_vertex[voisin] = ', validPairs.voisin_per_vertex[voisin])
         if not (v1_ind in voisinage_voisin): #on évite les redondances
             voisinage_voisin.append(v1_ind)
         validPairs.voisin_per_vertex[voisin] = voisinage_voisin
     ################ Bloc Instruction ################
-    print('model.vertices = ', model.vertices)
     instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[v2_ind-1])]
     for i in range(len(model.faces)):
         face = model.faces[i]
@@ -49,7 +51,8 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
     pairQueue.cleanFront(deletedVertices)
     
     #v1 reçoit les voisins de v2
-    voisinage_v1 = validPairs.voisin_per_vertex[v1_ind]
+    # voisinage_v1 = validPairs.voisin_per_vertex[v1_ind]
+    voisinage_v1 = validPairs.voisin_per_vertex[v1_ind].copy()
     for v in voisinage_v2:
         if (v != v1_ind) and not(v in voisinage_v1):
             voisinage_v1.append(v)

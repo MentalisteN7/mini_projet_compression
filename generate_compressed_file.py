@@ -18,11 +18,13 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     validPairs = infoVertexVoisin()
     validPairs.treshold = treshold
     validPairs.init_voisin(obj)
+    # print('voisins de 30 : ', (validPairs.voisin_per_vertex[30]))
+    # print('voisins de 59 : ', (validPairs.voisin_per_vertex[59]))
     
     #3. Compute the optimal contraction target v_bar and the cost for each valid pair (v1,v2)
     #4. Place all the pairs in a heap keyed on cost with the minimum cost pair at the top.
     pairQueue = PairQueue([], [])
-    print(validPairs.dic_voisins)
+    # print(validPairs.dic_voisins)
     for v1_ind in range(len(obj.vertices)):
         v1 = obj.vertices[v1_ind]
         Q1 = listQ[v1_ind]
@@ -31,16 +33,15 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
             Q2 = listQ[v2_ind-1]
             cost, v_bar = get_optimal_contraction(v1, v2, Q1, Q2)
             pairQueue.push((v1_ind+1,v2_ind, v_bar), cost)
-            print("ajouté paire", (v1_ind+1,v2_ind))
+            # print("ajouté paire", (v1_ind+1,v2_ind))
     
     #5. Iteratively remove the pair (v1;v2) of least cost from the heap,contract this pair
     deletedVertices = []
     numVertices = len(obj.vertices)
-    print('numVertices = ', numVertices)
-    print('targetSize = ', targetSize)
-    print('pairQueue.isEmpty() = ', pairQueue.isEmpty())
+    # print('numVertices = ', numVertices)
+    # print('targetSize = ', targetSize)
+    # print('pairQueue.isEmpty() = ', pairQueue.isEmpty())
     while (numVertices > targetSize) and (not pairQueue.isEmpty()) :
-        print('coucou')
         obj, listQ, validPairs, pairQueue, deletedVertices = \
             contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices)
         numVertices -= 1
@@ -72,5 +73,5 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     return 1
 
 
-# generate_compressed_file()
-generate_compressed_file(pathIn='assets/triangle.obj', targetSize=1)
+generate_compressed_file()
+# generate_compressed_file(pathIn='assets/triangle.obj', targetSize=1)

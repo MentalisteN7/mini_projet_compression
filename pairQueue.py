@@ -30,7 +30,7 @@ class PairQueue():
                 pair = pairCand
                 done = True
             else:
-                print('Le haut de la file était pas clean', pairCand)
+                # print('Le haut de la file était pas clean', pairCand)
                 done = self.isEmpty()
         # self.cleanFront(deletedVertices)
         return pair
