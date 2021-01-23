@@ -37,7 +37,8 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
             voisinage_voisin.append(v1_ind)
         validPairs.voisin_per_vertex[voisin] = voisinage_voisin
     ################ Bloc Instruction ################
-    instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[v2_ind])]
+    print('model.vertices = ', model.vertices)
+    instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[v2_ind-1])]
     for i in range(len(model.faces)):
         face = model.faces[i]
         if v2_ind in face:
