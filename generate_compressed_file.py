@@ -65,7 +65,7 @@ def generate_compressed_file(pathIn = 'assets/bunny_origin.obj', pathOut = 'bunn
         ind = int(i * len(fin)/10)
         fin.insert(ind, calculS(fin[:ind]))
     fin.append(calculS(fin))
-    instructions = debut# + fin
+    instructions = debut #+ fin
     
     obj_file_compress = open(pathOut, 'w')
     instructions = [e + '\n' for e in instructions]
@@ -77,6 +77,6 @@ def generate_compressed_file(pathIn = 'assets/bunny_origin.obj', pathOut = 'bunn
 
 # generate_compressed_file()
 # generate_compressed_file(pathIn='assets/triangle.obj', targetSize=1)
-# generate_compressed_file(pathOut = '../obja/assets/bunny_origin_compress.obj', targetSize=400, treshold=0)
+generate_compressed_file(pathOut = '../obja/assets/bunny_origin_compress.obj', targetSize=400, treshold=0)
 # generate_compressed_file(pathOut = 'bunny_origin_compress.obj', targetSize=400, treshold=0)
 generate_compressed_file(pathIn="assets/crate.obj", pathOut = '../obja/assets/crate_compress.obj', targetSize=13, treshold=0)

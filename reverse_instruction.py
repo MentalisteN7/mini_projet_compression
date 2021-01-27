@@ -28,7 +28,7 @@ def reverseInstruction(listInstruction):
         elif command == "f":
             # Une face a été créée
             # Inverse: Delete cette face
-            newInstruct = 'f ' + indice_element
+            newInstruct = 'df ' + indice_element
             pass
 
         elif command == "ev":
@@ -46,7 +46,7 @@ def reverseInstruction(listInstruction):
             x_coord = instruction_array[2]
             y_coord = instruction_array[3]
             z_coord = instruction_array[4]
-            newInstruct = "v " + indice_element + ' ' + x_coord + ' ' + y_coord + ' ' + z_coord
+            newInstruct = "v " + x_coord + ' ' + y_coord + ' ' + z_coord
 
         elif command == "tv":
             # Translate vertex
@@ -71,7 +71,7 @@ def reverseInstruction(listInstruction):
             x_coord = instruction_array[2]
             y_coord = instruction_array[3]
             z_coord = instruction_array[4]
-            newInstruct = "f " + ' ' + x_coord + ' ' + y_coord + ' ' + z_coord
+            newInstruct = "f " + x_coord + ' ' + y_coord + ' ' + z_coord
 
         elif command == "s":
             # Set memory
