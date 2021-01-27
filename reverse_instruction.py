@@ -17,7 +17,7 @@ def reverseInstruction(listInstruction):
 
             old_vertex = instruction_array[2]
             new_vertex = instruction_array[3]
-            newInstruct = 'efv ' + indice_element + new_vertex + old_vertex
+            newInstruct = 'efv ' + indice_element + ' ' + new_vertex + ' ' + old_vertex
             pass
 
         elif command == "v":
@@ -46,7 +46,7 @@ def reverseInstruction(listInstruction):
             x_coord = instruction_array[2]
             y_coord = instruction_array[3]
             z_coord = instruction_array[4]
-            newInstruct = "v " + indice_element + x_coord + y_coord + z_coord
+            newInstruct = "v " + indice_element + ' ' + x_coord + ' ' + y_coord + ' ' + z_coord
 
         elif command == "tv":
             # Translate vertex
@@ -54,7 +54,7 @@ def reverseInstruction(listInstruction):
             x_coord = instruction_array[2]
             y_coord = instruction_array[3]
             z_coord = instruction_array[4]
-            newInstruct = "tv " + indice_element + str(-float(x_coord)) + str(-float(y_coord)) + str(-float(z_coord))
+            newInstruct = "tv " + indice_element + ' ' + str(-float(x_coord)) + ' ' + str(-float(y_coord)) + ' ' + str(-float(z_coord))
             pass
 
         elif command == "ef":
@@ -71,7 +71,7 @@ def reverseInstruction(listInstruction):
             x_coord = instruction_array[2]
             y_coord = instruction_array[3]
             z_coord = instruction_array[4]
-            newInstruct = "f " + indice_element + x_coord + y_coord + z_coord
+            newInstruct = "f " + ' ' + x_coord + ' ' + y_coord + ' ' + z_coord
 
         elif command == "s":
             # Set memory
@@ -81,7 +81,7 @@ def reverseInstruction(listInstruction):
             # Pour compter la taille de vos fichiers (balises "s" dans vos codes), vous pouvez utiliser le dictionnaire suivant.
             # SIZES = {"v": 13, "f": 4, "ev":14, "tv":14, "ef": 5, "efv": 4, "df":1, "ts": 6, "tf": 7, "s": 0, "#": 0}
             # Inverse: Retirer memory
-            newInstruct = "s " + '-' + indice_element
+            # newInstruct = "s " + '-' + indice_element
             pass
         else:
             print('Unexpected value in reverse instruction')

@@ -44,7 +44,7 @@ def simplifyObj(listInstruction, pathIn = 'bunny_origin.obj'):
             
             listI = instruction.split()
             indice = int(listI.pop(1)) - 1
-            obj.vertices[indice] = None
+            obj.vertices[indice] = np.array(None)
             
         elif instruction[:2] == "tv":
             # Translate vertex

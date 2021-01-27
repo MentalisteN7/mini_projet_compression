@@ -2,11 +2,10 @@ from pairQueue import PairQueue
 from get_optimal_contraction import get_optimal_contraction
 from obj_loader import ObjLoader, verticeTxt, faceTxt
 
-def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, deletedVertices):
+def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, deletedVertices, instructions):
     """
     Réalise une itération de l'étape 5
     """
-    instructions = []    
 
     toContract = pairQueue.pop(deletedVertices)
     v1_ind = toContract[0]
@@ -68,4 +67,4 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
     # print('Le tas :',pairQueue.heap)
     # print('Les supprimés :', deletedVertices)
     
-    return model, Qlist, validPairs, pairQueue, deletedVertices
+    return model, Qlist, validPairs, pairQueue, deletedVertices, instructions

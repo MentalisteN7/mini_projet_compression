@@ -37,33 +37,35 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
     
     #5. Iteratively remove the pair (v1;v2) of least cost from the heap,contract this pair
     deletedVertices = []
+    instructions = []
     numVertices = len(obj.vertices)
     # print('numVertices = ', numVertices)
     # print('targetSize = ', targetSize)
     # print('pairQueue.isEmpty() = ', pairQueue.isEmpty())
     while (numVertices > targetSize) and (not pairQueue.isEmpty()) :
-        obj, listQ, validPairs, pairQueue, deletedVertices = \
-            contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices)
+        obj, listQ, validPairs, pairQueue, deletedVertices, instructions = \
+            contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices, instructions)
         numVertices -= 1
     
     
-    efv = 'efv 1 3 4'
-    v = 'v 0.0 0.0 0.0'
-    f = 'f 1 2 3'
-    ev = 'ev 1 -0.01 -0.98 0.79 -0.01 -0.45 0.58'
-    tv = 'tv 1 1.0 1.0 1.0'
-    ef = 'ef 1 1 2 4 1 2 3'
-    df = 'df 1 1 2 4'
-    s = 's 48'
-    listInstruction = [efv, v, f, ev, tv, ef, df, s]
-
+    # efv = 'efv 1 3 4'
+    # v = 'v 0.0 0.0 0.0'
+    # f = 'f 1 2 3'
+    # ev = 'ev 1 -0.01 -0.98 0.79 -0.01 -0.45 0.58'
+    # tv = 'tv 1 1.0 1.0 1.0'
+    # ef = 'ef 1 1 2 4 1 2 3'
+    # df = 'df 1 1 2 4'
+    # s = 's 48'
+    # listInstruction = [efv, v, f, ev, tv, ef, df, s]
+    listInstruction = instructions
+    
     debut = simplifyObj(listInstruction, pathIn)
     fin   = reverseInstruction(listInstruction)
     for i in range(1,10):
         ind = int(i * len(fin)/10)
         fin.insert(ind, calculS(fin[:ind]))
     fin.append(calculS(fin))
-    instructions = debut + fin
+    instructions = debut# + fin
     
     obj_file_compress = open(pathOut, 'w')
     instructions = [e + '\n' for e in instructions]
@@ -75,3 +77,5 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
 
 generate_compressed_file()
 # generate_compressed_file(pathIn='assets/triangle.obj', targetSize=1)
+# generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = '../obja/assets/bunny_origin_compress.obj', targetSize=400, treshold=0)
+generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origin_compress.obj', targetSize=400, treshold=0)

@@ -14,7 +14,6 @@ class ObjLoader(object):
                     index3 = line.find(" ", index2 + 1)
 
                     vertex = np.array([float(line[index1:index2]), float(line[index2:index3]), float(line[index3:-1])])
-                    # vertex = np.matrix([round(vertex[0], 2), round(vertex[1], 2), round(vertex[2], 2)])
                     self.vertices.append(vertex)
 
                 elif line[0] == "f":
@@ -41,7 +40,14 @@ class ObjLoader(object):
         i = 0
         while i < len(self.vertices):
             if self.vertices[i].any() == None:
-                self.faces = [(e[0]-1, e[1]-1, e[2]-1) for e in self.faces]
+                for j in range(len(self.faces)):
+                    if self.faces[j] != None:
+                        e = self.faces[j]
+                        self.faces[j] = (e[0]-int(e[0]>i), e[1]-int(e[1]>i), e[2]-int(e[2]>i))
+                        # if i in self.faces[j]:
+                        #     self.faces[j] = None
+
+                # self.faces = [(e[0]-int(e[0]>=i), e[1]-int(e[1]>=i), e[2]-int(e[2]>=i)) for e in self.faces if (e != None) ]
                 self.vertices.pop(i)
             else :
                 i += 1
@@ -50,7 +56,6 @@ class ObjLoader(object):
             obj += ['v ' + verticeTxt(vertex)]
         for face in self.faces:
             if face != None:
-            # if face.all() != None:
                 obj += ['f ' + faceTxt(face)]
         obj += ['s ' + str(len(self.vertices)*13 + len(self.faces)*4)]
         return obj
