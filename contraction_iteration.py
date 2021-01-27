@@ -43,7 +43,7 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
     for i in range(len(model.faces)):
         face = model.faces[i]
         if v2_ind in face:
-            instructions += ['df ' + str(i) + ' ' + faceTxt(face)]
+            instructions += ['df ' + str(i+1) + ' ' + faceTxt(face)]
     ##################################################
     deletedVertices.append(v2_ind)
     #Les paires qui sont devenues invalides et qui sont à l'avant de la file sont nettoyées
