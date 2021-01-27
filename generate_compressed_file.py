@@ -7,7 +7,7 @@ from simplify_obj import simplifyObj
 from reverse_instruction import reverseInstruction
 from contraction_iteration import contraction_iteration
 
-def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origin_compress.obj', targetSize=100, treshold=0, ):
+def generate_compressed_file(pathIn = 'assets/bunny_origin.obj', pathOut = 'bunny_origin_compress.obj', targetSize=100, treshold=0, ):
     obj = ObjLoader(pathIn)
 
     #1. Compute the Q matrices for all the initial vertices.
@@ -77,5 +77,6 @@ def generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origi
 
 generate_compressed_file()
 # generate_compressed_file(pathIn='assets/triangle.obj', targetSize=1)
-# generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = '../obja/assets/bunny_origin_compress.obj', targetSize=400, treshold=0)
-generate_compressed_file(pathIn = 'bunny_origin.obj', pathOut = 'bunny_origin_compress.obj', targetSize=400, treshold=0)
+# generate_compressed_file(pathOut = '../obja/assets/bunny_origin_compress.obj', targetSize=400, treshold=0)
+# generate_compressed_file(pathOut = 'bunny_origin_compress.obj', targetSize=400, treshold=0)
+generate_compressed_file(pathIn="assets/crate.obj", pathOut = '../obja/assets/crate_compress.obj', targetSize=12, treshold=0)
