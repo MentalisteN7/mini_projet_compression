@@ -4,7 +4,7 @@ def reverseInstruction(listInstruction):
     reversedInstructions = [str] * len(listInstruction)
     for i in range(len(listInstruction)):
         instruction = listInstruction[i]
-        instruction_array = instruction.split(' ')
+        instruction_array = instruction.split()
         command = instruction_array[0]
         indice_element = instruction_array[1]
         newInstruct = instruction

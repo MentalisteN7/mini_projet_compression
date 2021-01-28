@@ -39,11 +39,11 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
             voisinage_voisin.append(v1_ind)
         validPairs.voisin_per_vertex[voisin] = voisinage_voisin
     ################ Bloc Instruction ################
-    instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[v2_ind-1])]
     for i in range(len(model.faces)):
         face = model.faces[i]
         if v2_ind in face:
             instructions += ['df ' + str(i+1) + ' ' + faceTxt(face)]
+    instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[v2_ind-1])]
     ##################################################
     deletedVertices.append(v2_ind)
     #Les paires qui sont devenues invalides et qui sont à l'avant de la file sont nettoyées
