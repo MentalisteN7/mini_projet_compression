@@ -76,7 +76,7 @@ def reverseInstruction(listInstruction):
         elif command == "s":
             # Set memory
             # Balise utile pour certain papier, délire de bits, tout ça...
-            # dizaine de balises à utiliser dans l'idéal. (abcisse des courbes)
+            # dizaine de balises à utiliser dans l'idéal. (abscisse des courbes)
             # A mettre à chaque grande étape, 3000 lignes de codes, on aura ça.
             # Pour compter la taille de vos fichiers (balises "s" dans vos codes), vous pouvez utiliser le dictionnaire suivant.
             # SIZES = {"v": 13, "f": 4, "ev":14, "tv":14, "ef": 5, "efv": 4, "df":1, "ts": 6, "tf": 7, "s": 0, "#": 0}

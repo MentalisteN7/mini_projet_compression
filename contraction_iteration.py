@@ -57,7 +57,7 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
             voisinage_v1.append(v)
     validPairs.voisin_per_vertex[v1_ind] = voisinage_v1
     
-    #recalcul des coûts des paires impliquant v1
+    #recalcule des coûts des paires impliquant v1
     for voisin_ind in voisinage_v1:
         voisin = model.vertices[voisin_ind-1]
         Q1 = Qlist[v1_ind-1]
