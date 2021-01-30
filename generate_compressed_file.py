@@ -1,3 +1,4 @@
+from typing import List
 from obj_loader import ObjLoader, calculS
 from getListQ import getListQ, getListKp
 from infoVertexVoisin import infoVertexVoisin
@@ -39,12 +40,13 @@ def generate_compressed_file(pathIn = 'assets/bunny_origin.obj', pathOut = 'bunn
     deletedVertices = []
     instructions = []
     numVertices = len(obj.vertices)
+    vertexNb = numVertices
     # print('numVertices = ', numVertices)
     # print('targetSize = ', targetSize)
     # print('pairQueue.isEmpty() = ', pairQueue.isEmpty())
     while (numVertices > targetSize) and (not pairQueue.isEmpty()) :
-        obj, listQ, validPairs, pairQueue, deletedVertices, instructions = \
-            contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices, instructions)
+        obj, listQ, validPairs, pairQueue, deletedVertices, instructions, vertexNb = \
+            contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices, instructions, vertexNb)
         numVertices -= 1
     
     
@@ -65,8 +67,9 @@ def generate_compressed_file(pathIn = 'assets/bunny_origin.obj', pathOut = 'bunn
         ind = int(i * len(fin)/10)
         fin.insert(ind, calculS(fin[:ind]))
     fin.append(calculS(fin))
-    instructions = debut #+ fin
-    
+    instructions = debut #+ fin #+ listInstruction + ['------'] + fin
+    # instructions = ssort(instructions)
+
     obj_file_compress = open(pathOut, 'w')
     instructions = [e + '\n' for e in instructions]
     obj_file_compress.writelines(instructions)
@@ -74,9 +77,29 @@ def generate_compressed_file(pathIn = 'assets/bunny_origin.obj', pathOut = 'bunn
 
     return 1
 
+def ssort(list: List[str]):
+    v = []
+    s = []
+    ev = []
+    f = []
+    df = []
+    for e in list :
+        if e[0] == 'v':
+            v += [e]
+        if e[0] == 's':
+            s += [e]
+        if e[0] == 'e':
+            ev += [e]
+        if e[0] == 'f':
+            f += [e]
+        if e[0] == 'd':
+            df += [e]
+    return v + f
+
 
 # generate_compressed_file()
 # generate_compressed_file(pathIn='assets/triangle.obj', targetSize=1)
 generate_compressed_file(pathOut = '../obja/assets/bunny_origin_compress.obj', targetSize=400, treshold=0)
 # generate_compressed_file(pathOut = 'bunny_origin_compress.obj', targetSize=400, treshold=0)
 generate_compressed_file(pathIn="assets/crate.obj", pathOut = '../obja/assets/crate_compress.obj', targetSize=13, treshold=0)
+# generate_compressed_file(pathIn="../obja/assets/cube.obj", pathOut = '../obja/assets/cube_compress.obj', targetSize=3, treshold=0)

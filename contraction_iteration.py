@@ -2,7 +2,7 @@ from pairQueue import PairQueue
 from get_optimal_contraction import get_optimal_contraction
 from obj_loader import ObjLoader, verticeTxt, faceTxt
 
-def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, deletedVertices, instructions):
+def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, deletedVertices, instructions, vertexNb):
     """
     Réalise une itération de l'étape 5
     """
@@ -42,8 +42,9 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
     for i in range(len(model.faces)):
         face = model.faces[i]
         if v2_ind in face:
-            instructions += ['df ' + str(i+1) + ' ' + faceTxt(face)]
+            instructions += ['df ' + str(i+1) + ' ' + faceTxt(face, v2_ind, vertexNb)]
     instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[v2_ind-1])]
+    vertexNb -= 1
     ##################################################
     deletedVertices.append(v2_ind)
     #Les paires qui sont devenues invalides et qui sont à l'avant de la file sont nettoyées
@@ -67,4 +68,4 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
     # print('Le tas :',pairQueue.heap)
     # print('Les supprimés :', deletedVertices)
     
-    return model, Qlist, validPairs, pairQueue, deletedVertices, instructions
+    return model, Qlist, validPairs, pairQueue, deletedVertices, instructions, vertexNb

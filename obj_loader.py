@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.core.numeric import Inf
 
 class ObjLoader(object):
     def __init__(self, fileName):
@@ -33,6 +34,14 @@ class ObjLoader(object):
             f.close()
         except IOError:
             print(".obj file not found.")
+    
+    def updateFaces(self, deletedVertex: int):
+        for j in range(len(self.faces)):
+            if self.faces[j] != None:
+                e = self.faces[j]
+                self.faces[j] = (e[0]-int(e[0]>deletedVertex), 
+                                 e[1]-int(e[1]>deletedVertex), 
+                                 e[2]-int(e[2]>deletedVertex))
 
     def toOBJ(self):
         obj = []
@@ -40,14 +49,7 @@ class ObjLoader(object):
         i = 0
         while i < len(self.vertices):
             if self.vertices[i].any() == None:
-                for j in range(len(self.faces)):
-                    if self.faces[j] != None:
-                        e = self.faces[j]
-                        self.faces[j] = (e[0]-int(e[0]>i), e[1]-int(e[1]>i), e[2]-int(e[2]>i))
-                        # if i in self.faces[j]:
-                        #     self.faces[j] = None
-
-                # self.faces = [(e[0]-int(e[0]>=i), e[1]-int(e[1]>=i), e[2]-int(e[2]>=i)) for e in self.faces if (e != None) ]
+                self.updateFaces(i+1)
                 self.vertices.pop(i)
             else :
                 i += 1
@@ -72,5 +74,13 @@ def calculS(listInstruction) -> str:
 def verticeTxt(vertex) -> str:
     return str(vertex)[1:-1]
 
-def faceTxt(face) -> str:
+def faceTxt(face, oldVertexNb: int = Inf, newVertexNb: int = Inf) -> str:
+    if oldVertexNb != Inf and newVertexNb != Inf :
+        face = (face[0]+int(face[0]==oldVertexNb)*(newVertexNb - oldVertexNb), 
+                face[1]+int(face[1]==oldVertexNb)*(newVertexNb - oldVertexNb), 
+                face[2]+int(face[2]==oldVertexNb)*(newVertexNb - oldVertexNb))
+
+        face = (face[0]-int(face[0]>oldVertexNb and face[0]!=newVertexNb), 
+                face[1]-int(face[1]>oldVertexNb and face[1]!=newVertexNb), 
+                face[2]-int(face[2]>oldVertexNb and face[2]!=newVertexNb))
     return str(face).replace(",", "")[1:-1]
