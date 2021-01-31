@@ -1,3 +1,4 @@
+from typing import List
 from pairQueue import PairQueue
 from get_optimal_contraction import get_optimal_contraction
 from obj_loader import ObjLoader, upFace, verticeTxt, faceTxt
@@ -45,25 +46,25 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQu
             df = [int(e) for e in instruct.split()[2:]]
             if v2_ind-len(deletedVertices) == df[0]:
                 df[0] = vertexNb
-            elif v2_ind-1 < df[0] and df[0] < vertexNb:
+            elif v2_ind < df[0] and df[0] < vertexNb:
                 df[0] -= 1
 
             if v2_ind-len(deletedVertices) == df[1]:
                 df[1] = vertexNb
-            elif v2_ind-len(deletedVertices) < df[1] and df[1] < vertexNb:
+            elif v2_ind < df[1] and df[1] < vertexNb:
                 df[1] -= 1
 
             if v2_ind-len(deletedVertices) == df[2]:
                 df[2] = vertexNb
-            elif v2_ind-len(deletedVertices) < df[2] and df[0] < vertexNb:
+            elif v2_ind < df[2] and df[2] < vertexNb:
                 df[2] -= 1
 
             instructions[i] = str(instruct.split()[:2] + df).replace(",", "").replace("'", "")[1:-1]
     for i in range(len(model.faces)):
+        # model.faces[i] = upFace(model.faces[i], v2_ind, vertexNb)
         face = model.faces[i]
-        if v2_ind in face:
-            model.faces[i] = upFace(face, v2_ind, vertexNb)
-            instructions += ['df ' + str(i+1) + ' ' + faceTxt(face)]
+        if v2_ind in face and not hasIntersection(face, deletedVertices):
+            instructions += ['df ' + str(i+1) + ' ' + faceTxt(face, v2_ind, vertexNb, deletedVertices)]
     instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[v2_ind-1])]
     vertexNb -= 1
     ##################################################
@@ -90,3 +91,9 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQu
     # print('Les supprimés :', deletedVertices)
     
     return model, Qlist, validPairs, pairQueue, deletedVertices, instructions, vertexNb
+
+def hasIntersection(list1: List[int], list2: List[int]):
+    for i in list1:
+        if i in list2:
+            return True
+    return False
