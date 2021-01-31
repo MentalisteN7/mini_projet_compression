@@ -101,5 +101,5 @@ def ssort(list: List[str]):
 # generate_compressed_file(pathIn='assets/triangle.obj', targetSize=1)
 generate_compressed_file(pathOut = '../obja/assets/bunny_origin_compress.obj', targetSize=400, treshold=0)
 # generate_compressed_file(pathOut = 'bunny_origin_compress.obj', targetSize=400, treshold=0)
-generate_compressed_file(pathIn="assets/crate.obj", pathOut = '../obja/assets/crate_compress.obj', targetSize=12, treshold=0)
+generate_compressed_file(pathIn="assets/crate.obj", pathOut = '../obja/assets/crate_compress.obj', targetSize=11, treshold=0)
 # generate_compressed_file(pathIn="../obja/assets/cube.obj", pathOut = '../obja/assets/cube_compress.obj', targetSize=3, treshold=0)

@@ -93,9 +93,14 @@ def faceTxt(face, oldVertexNb: int = Inf, newVertexNb: int = Inf, deletedVertice
                 face[1]+int(face[1]==oldVertexNb)*(newVertexNb - oldVertexNb), 
                 face[2]+int(face[2]==oldVertexNb)*(newVertexNb - oldVertexNb))
 
-        face = (face[0]-int(any(face[0]>(np.array([oldVertexNb] + deletedVertices))) and face[0]!=newVertexNb)*max(1,len(deletedVertices)), 
-                face[1]-int(any(face[1]>(np.array([oldVertexNb] + deletedVertices))) and face[1]!=newVertexNb)*max(1,len(deletedVertices)), 
-                face[2]-int(any(face[2]>(np.array([oldVertexNb] + deletedVertices))) and face[2]!=newVertexNb)*max(1,len(deletedVertices)))
+        v2_ind_act = oldVertexNb - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[0]])
+        face = (face[0] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[0]]) * int(face[0]!=newVertexNb), #probablement int(face[0]<newVertexNb)
+                face[1] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[1]]) * int(face[1]!=newVertexNb),
+                face[2] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[2]]) * int(face[2]!=newVertexNb))
+
+        # face = (face[0]-int(any(face[0]>(np.array([oldVertexNb] + deletedVertices))) and face[0]!=newVertexNb)*max(1,len(deletedVertices)), 
+        #         face[1]-int(any(face[1]>(np.array([oldVertexNb] + deletedVertices))) and face[1]!=newVertexNb)*max(1,len(deletedVertices)), 
+        #         face[2]-int(any(face[2]>(np.array([oldVertexNb] + deletedVertices))) and face[2]!=newVertexNb)*max(1,len(deletedVertices)))
     
         # face = (face[0]-int(face[0]>oldVertexNb and face[0]!=newVertexNb), 
         #         face[1]-int(face[1]>oldVertexNb and face[1]!=newVertexNb), 

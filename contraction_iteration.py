@@ -2,6 +2,7 @@ from typing import List
 from pairQueue import PairQueue
 from get_optimal_contraction import get_optimal_contraction
 from obj_loader import ObjLoader, upFace, verticeTxt, faceTxt
+import numpy as np
 
 def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQueue, deletedVertices, instructions, vertexNb):
     """
@@ -44,17 +45,18 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQu
         instruct = instructions[i]
         if instruct[:2] == 'df':
             df = [int(e) for e in instruct.split()[2:]]
-            if v2_ind-len(deletedVertices) == df[0]:
+            v2_ind_act = v2_ind - sum([int(e) for e in  np.array(deletedVertices)<v2_ind])
+            if v2_ind_act == df[0]:
                 df[0] = vertexNb
             elif v2_ind < df[0] and df[0] < vertexNb:
                 df[0] -= 1
 
-            if v2_ind-len(deletedVertices) == df[1]:
+            if v2_ind_act == df[1]:
                 df[1] = vertexNb
             elif v2_ind < df[1] and df[1] < vertexNb:
                 df[1] -= 1
 
-            if v2_ind-len(deletedVertices) == df[2]:
+            if v2_ind_act == df[2]:
                 df[2] = vertexNb
             elif v2_ind < df[2] and df[2] < vertexNb:
                 df[2] -= 1
