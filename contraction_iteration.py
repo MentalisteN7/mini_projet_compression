@@ -1,8 +1,8 @@
 from pairQueue import PairQueue
 from get_optimal_contraction import get_optimal_contraction
-from obj_loader import ObjLoader, verticeTxt, faceTxt
+from obj_loader import ObjLoader, upFace, verticeTxt, faceTxt
 
-def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, deletedVertices, instructions, vertexNb):
+def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQueue, deletedVertices, instructions, vertexNb):
     """
     Réalise une itération de l'étape 5
     """
@@ -39,10 +39,31 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue, delete
             voisinage_voisin.append(v1_ind)
         validPairs.voisin_per_vertex[voisin] = voisinage_voisin
     ################ Bloc Instruction ################
+    for i in range(len(instructions)):
+        instruct = instructions[i]
+        if instruct[:2] == 'df':
+            df = [int(e) for e in instruct.split()[2:]]
+            if v2_ind-len(deletedVertices) == df[0]:
+                df[0] = vertexNb
+            elif v2_ind-1 < df[0] and df[0] < vertexNb:
+                df[0] -= 1
+
+            if v2_ind-len(deletedVertices) == df[1]:
+                df[1] = vertexNb
+            elif v2_ind-len(deletedVertices) < df[1] and df[1] < vertexNb:
+                df[1] -= 1
+
+            if v2_ind-len(deletedVertices) == df[2]:
+                df[2] = vertexNb
+            elif v2_ind-len(deletedVertices) < df[2] and df[0] < vertexNb:
+                df[2] -= 1
+
+            instructions[i] = str(instruct.split()[:2] + df).replace(",", "").replace("'", "")[1:-1]
     for i in range(len(model.faces)):
         face = model.faces[i]
         if v2_ind in face:
-            instructions += ['df ' + str(i+1) + ' ' + faceTxt(face, v2_ind, vertexNb)]
+            model.faces[i] = upFace(face, v2_ind, vertexNb)
+            instructions += ['df ' + str(i+1) + ' ' + faceTxt(face)]
     instructions += ['dv ' + str(v2_ind) + ' ' + verticeTxt(model.vertices[v2_ind-1])]
     vertexNb -= 1
     ##################################################
