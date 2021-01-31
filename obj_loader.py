@@ -9,27 +9,38 @@ class ObjLoader(object):
         try:
             f = open(fileName)
             for line in f:
-                if line[:2] == "v ":
-                    index1 = line.find(" ") + 1
-                    index2 = line.find(" ", index1 + 1)
-                    index3 = line.find(" ", index2 + 1)
+                line_array = line.split()
+                if len(line_array) > 0:
+                    command = line_array[0]
+                    
+                    if command == "v":
+                        x_coord = line_array[1]
+                        y_coord = line_array[2]
+                        z_coord = line_array[3]
 
-                    vertex = np.array([float(line[index1:index2]), float(line[index2:index3]), float(line[index3:-1])])
-                    self.vertices.append(vertex)
+                        # index1 = line.find(" ") + 1
+                        # index2 = line.find(" ", index1 + 1)
+                        # index3 = line.find(" ", index2 + 1)
+                        # vertex = np.array([float(line[index1:index2]), float(line[index2:index3]), float(line[index3:-1])])
+                        vertex = np.array([float(x_coord), float(y_coord), float(z_coord)])
+                        self.vertices.append(vertex)
 
-                elif line[0] == "f":
-                    string = line.replace("//", "/")
-                    ##
-                    i = string.find(" ") + 1
-                    face = []
-                    for item in range(string.count(" ")):
-                        if string.find(" ", i) == -1:
-                            face.append(int(string[i:-1]))
-                            break
-                        face.append(int(string[i:string.find(" ", i)]))
-                        i = string.find(" ", i) + 1
-                    ##
-                    self.faces.append(tuple(face))
+                    elif command == "f":
+                        string = line.replace("//", "/")
+                        ##
+                        vertex_1 = int(line_array[1])
+                        vertex_2 = int(line_array[2])
+                        vertex_3 = int(line_array[3])
+                        # i = string.find(" ") + 1
+                        face = [vertex_1, vertex_2, vertex_3]
+                        # for item in range(string.count(" ")):
+                        #     if string.find(" ", i) == -1:
+                        #         face.append(int(string[i:-1]))
+                        #         break
+                        #     face.append(int(string[i:string.find(" ", i)]))
+                        #     i = string.find(" ", i) + 1
+                        ##
+                        self.faces.append(tuple(face))
 
             f.close()
         except IOError:
