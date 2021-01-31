@@ -75,15 +75,19 @@ def calculS(listInstruction) -> str:
 def verticeTxt(vertex) -> str:
     return str(vertex)[1:-1]
 
-def faceTxt(face, oldVertexNb: int = Inf, newVertexNb: int = Inf) -> str:
-    if oldVertexNb != Inf and newVertexNb != Inf :
+def faceTxt(face, oldVertexNb: int = Inf, newVertexNb: int = Inf, deletedVertices = []) -> str:
+    if oldVertexNb != Inf and newVertexNb != Inf:
         face = (face[0]+int(face[0]==oldVertexNb)*(newVertexNb - oldVertexNb), 
                 face[1]+int(face[1]==oldVertexNb)*(newVertexNb - oldVertexNb), 
                 face[2]+int(face[2]==oldVertexNb)*(newVertexNb - oldVertexNb))
 
-        face = (face[0]-int(face[0]>oldVertexNb and face[0]!=newVertexNb), 
-                face[1]-int(face[1]>oldVertexNb and face[1]!=newVertexNb), 
-                face[2]-int(face[2]>oldVertexNb and face[2]!=newVertexNb))
+        # face = (face[0]-int((face[0]>np.array([oldVertexNb] + deletedVertices)).any() and face[0]!=newVertexNb)*len(deletedVertices), 
+        #         face[1]-int((face[1]>np.array([oldVertexNb] + deletedVertices)).any() and face[1]!=newVertexNb)*len(deletedVertices), 
+        #         face[2]-int((face[2]>np.array([oldVertexNb] + deletedVertices)).any() and face[2]!=newVertexNb)*len(deletedVertices))
+    
+        face = (face[0]-int(face[0]>oldVertexNb and face[0]!=newVertexNb)*len(deletedVertices), 
+                face[1]-int(face[1]>oldVertexNb and face[1]!=newVertexNb)*len(deletedVertices), 
+                face[2]-int(face[2]>oldVertexNb and face[2]!=newVertexNb)*len(deletedVertices))
     return str(face).replace(",", "")[1:-1]
 
 def upFace(face, oldVertexNb: int, newVertexNb: int) -> str:
