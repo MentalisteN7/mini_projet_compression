@@ -69,6 +69,7 @@ def calculS(listInstruction) -> str:
         inst.replace("\n", "")
         if len(inst.split()) > 0:
             taille += SIZES[inst.split()[0]]
+    return ''
     return 's ' + str(taille)
 
 def verticeTxt(vertex) -> str:
@@ -84,3 +85,13 @@ def faceTxt(face, oldVertexNb: int = Inf, newVertexNb: int = Inf) -> str:
                 face[1]-int(face[1]>oldVertexNb and face[1]!=newVertexNb), 
                 face[2]-int(face[2]>oldVertexNb and face[2]!=newVertexNb))
     return str(face).replace(",", "")[1:-1]
+
+def upFace(face, oldVertexNb: int, newVertexNb: int) -> str:
+    face = (face[0]+int(face[0]==oldVertexNb)*(newVertexNb - oldVertexNb), 
+            face[1]+int(face[1]==oldVertexNb)*(newVertexNb - oldVertexNb), 
+            face[2]+int(face[2]==oldVertexNb)*(newVertexNb - oldVertexNb))
+
+    face = (face[0]-int(face[0]>oldVertexNb and face[0]!=newVertexNb), 
+            face[1]-int(face[1]>oldVertexNb and face[1]!=newVertexNb), 
+            face[2]-int(face[2]>oldVertexNb and face[2]!=newVertexNb))
+    return face
