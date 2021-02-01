@@ -54,7 +54,8 @@ def get_optimal_contraction(v1,v2,q1,q2):
         else:
             milieu_hom = 0.5* (v1_hom + v2_hom)
             cout_milieu = milieu_hom.dot(q_barre).dot(milieu_hom).item()
-            candidats = [(cout_v1, 1, v1_hom), (cout_milieu, 2, milieu_hom), (cout_v2, 3, v2_hom)]
+            #On s'arrange pour que le milieu soit choisi dans les cas ambigus
+            candidats = [(cout_v1, 1, v1_hom), (cout_milieu, 0, milieu_hom), (cout_v2, 2, v2_hom)]
             paire_min = min(candidats)
             cost = paire_min[0]
             v_barre = paire_min[2][0:3]
