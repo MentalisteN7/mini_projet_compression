@@ -18,29 +18,16 @@ class ObjLoader(object):
                         x_coord = line_array[1]
                         y_coord = line_array[2]
                         z_coord = line_array[3]
-
-                        # index1 = line.find(" ") + 1
-                        # index2 = line.find(" ", index1 + 1)
-                        # index3 = line.find(" ", index2 + 1)
-                        # vertex = np.array([float(line[index1:index2]), float(line[index2:index3]), float(line[index3:-1])])
+                        
                         vertex = np.array([float(x_coord), float(y_coord), float(z_coord)])
                         self.vertices.append(vertex)
 
                     elif command == "f":
-                        string = line.replace("//", "/")
-                        ##
                         vertex_1 = int(line_array[1])
                         vertex_2 = int(line_array[2])
                         vertex_3 = int(line_array[3])
-                        # i = string.find(" ") + 1
+                        
                         face = [vertex_1, vertex_2, vertex_3]
-                        # for item in range(string.count(" ")):
-                        #     if string.find(" ", i) == -1:
-                        #         face.append(int(string[i:-1]))
-                        #         break
-                        #     face.append(int(string[i:string.find(" ", i)]))
-                        #     i = string.find(" ", i) + 1
-                        ##
                         self.faces.append(tuple(face))
 
             f.close()
@@ -81,7 +68,7 @@ def calculS(listInstruction) -> str:
         inst.replace("\n", "")
         if len(inst.split()) > 0:
             taille += SIZES[inst.split()[0]]
-    return ''
+    # return ''
     return 's ' + str(taille)
 
 def verticeTxt(vertex) -> str:
@@ -97,36 +84,8 @@ def faceTxt(face, oldVertexNb: int = Inf, newVertexNb: int = Inf, deletedVertice
                 face[1]+int(face[1]==oldVertexNb)*(newVertexNb - oldVertexNb), 
                 face[2]+int(face[2]==oldVertexNb)*(newVertexNb - oldVertexNb))
 
-        # diff0 = int(face[0]!=newVertexNb)
-        # diff1 = int(face[1]!=newVertexNb)
-        # diff2 = int(face[2]!=newVertexNb)
-
-        v2_ind_act = oldVertexNb - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[0]])
-        face = (face[0] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[0]]) * diff0, #probablement int(face[0]<newVertexNb)
+        face = (face[0] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[0]]) * diff0,
                 face[1] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[1]]) * diff1,
                 face[2] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[2]]) * diff2)
 
-        # face = (face[0]-int(any(face[0]>(np.array([oldVertexNb] + deletedVertices))) and face[0]!=newVertexNb)*max(1,len(deletedVertices)), 
-        #         face[1]-int(any(face[1]>(np.array([oldVertexNb] + deletedVertices))) and face[1]!=newVertexNb)*max(1,len(deletedVertices)), 
-        #         face[2]-int(any(face[2]>(np.array([oldVertexNb] + deletedVertices))) and face[2]!=newVertexNb)*max(1,len(deletedVertices)))
-    
-        # face = (face[0]-int(face[0]>oldVertexNb and face[0]!=newVertexNb), 
-        #         face[1]-int(face[1]>oldVertexNb and face[1]!=newVertexNb), 
-        #         face[2]-int(face[2]>oldVertexNb and face[2]!=newVertexNb))
     return str(face).replace(",", "")[1:-1]
-
-def upFace(face, oldVertexNb: int, newVertexNb: int) -> str:
-    face = (face[0]+int(face[0]==oldVertexNb)*(newVertexNb - oldVertexNb), 
-            face[1]+int(face[1]==oldVertexNb)*(newVertexNb - oldVertexNb), 
-            face[2]+int(face[2]==oldVertexNb)*(newVertexNb - oldVertexNb))
-
-    face = (face[0]-int(face[0]>oldVertexNb and face[0]<newVertexNb), 
-            face[1]-int(face[1]>oldVertexNb and face[1]<newVertexNb), 
-            face[2]-int(face[2]>oldVertexNb and face[2]<newVertexNb))
-    return face
-
-def any(list: List[bool]):
-    res = False
-    for e in list:
-        res = res or e
-    return res

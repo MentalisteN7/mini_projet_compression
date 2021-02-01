@@ -49,26 +49,13 @@ def generate_compressed_file(pathIn = 'assets/bunny_origin.obj', pathOut = 'bunn
             contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices, instructions, vertexNb)
         numVertices -= 1
     
-    
-    # efv = 'efv 1 3 4'
-    # v = 'v 0.0 0.0 0.0'
-    # f = 'f 1 2 3'
-    # ev = 'ev 1 -0.01 -0.98 0.79 -0.01 -0.45 0.58'
-    # tv = 'tv 1 1.0 1.0 1.0'
-    # ef = 'ef 1 1 2 4 1 2 3'
-    # df = 'df 1 1 2 4'
-    # s = 's 48'
-    # listInstruction = [efv, v, f, ev, tv, ef, df, s]
-    listInstruction = instructions
-    
-    debut = simplifyObj(listInstruction, pathIn)
-    fin   = reverseInstruction(listInstruction)
+    debut = simplifyObj(instructions, pathIn)
+    fin   = reverseInstruction(instructions)
     for i in range(1,10):
         ind = int(i * len(fin)/10)
         fin.insert(ind, calculS(fin[:ind]))
     fin.append(calculS(fin))
-    instructions = debut + fin #+ listInstruction + ['------'] + fin
-    # instructions = ssort(instructions)
+    instructions = debut + fin
 
     obj_file_compress = open(pathOut, 'w')
     instructions = [e + '\n' for e in instructions]
@@ -77,29 +64,9 @@ def generate_compressed_file(pathIn = 'assets/bunny_origin.obj', pathOut = 'bunn
 
     return 1
 
-def ssort(list: List[str]):
-    v = []
-    s = []
-    ev = []
-    f = []
-    df = []
-    for e in list :
-        if e[0] == 'v':
-            v += [e]
-        if e[0] == 's':
-            s += [e]
-        if e[0] == 'e':
-            ev += [e]
-        if e[0] == 'f':
-            f += [e]
-        if e[0] == 'd':
-            df += [e]
-    return v + f
-
-
 # generate_compressed_file()
 # generate_compressed_file(pathIn='assets/triangle.obj', targetSize=1)
 generate_compressed_file(pathOut = '../obja/assets/bunny_origin_compress.obj', targetSize=400, treshold=0)
 # generate_compressed_file(pathOut = 'bunny_origin_compress.obj', targetSize=400, treshold=0)
-generate_compressed_file(pathIn="assets/crate.obj", pathOut = '../obja/assets/crate_compress.obj', targetSize=1, treshold=0)
+generate_compressed_file(pathIn="assets/crate.obj", pathOut = '../obja/assets/crate_compress.obj', targetSize=4, treshold=0)
 # generate_compressed_file(pathIn="../obja/assets/cube.obj", pathOut = '../obja/assets/cube_compress.obj', targetSize=3, treshold=0)

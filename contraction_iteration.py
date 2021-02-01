@@ -1,7 +1,7 @@
 from typing import List
 from pairQueue import PairQueue
 from get_optimal_contraction import get_optimal_contraction
-from obj_loader import ObjLoader, upFace, verticeTxt, faceTxt
+from obj_loader import ObjLoader, verticeTxt, faceTxt
 import numpy as np
 
 def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQueue, deletedVertices, instructions, vertexNb):
@@ -21,7 +21,6 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQu
     # _, v_bar = get_optimal_contraction(v1,v2, Q1, Q2) #ou v_bar = v_bar_list[indice] si on choisit de les stocker
     
     #v1 devient  v_bar
-    # instructions += ['ev ' + str(v1_ind) + ' ' + verticeTxt(v_bar) + ' ' + verticeTxt(model.vertices[v1_ind-1])]
     instructions += ['ev ' + str(v1_ind- sum([int(e) for e in  np.array(deletedVertices)<v1_ind])) + ' ' + verticeTxt(v_bar) + ' ' + verticeTxt(model.vertices[v1_ind-1])]
     model.vertices[v1_ind-1] = v_bar
     Qlist[v1_ind] = Q1 + Q2
@@ -68,7 +67,7 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQu
 
             instructions[i] = str(instruct.split()[:2] + df).replace(",", "").replace("'", "")[1:-1]
     for i in range(len(model.faces)):
-        # model.faces[i] = upFace(model.faces[i], v2_ind, vertexNb)
+        
         face = model.faces[i]
         if v2_ind in face and not hasIntersection(face, deletedVertices):
             instructions += ['df ' + str(i+1) + ' ' + faceTxt(face, v2_ind, vertexNb, deletedVertices)]
