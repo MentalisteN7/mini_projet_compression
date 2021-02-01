@@ -89,14 +89,22 @@ def verticeTxt(vertex) -> str:
 
 def faceTxt(face, oldVertexNb: int = Inf, newVertexNb: int = Inf, deletedVertices = []) -> str:
     if oldVertexNb != Inf and newVertexNb != Inf:
+
+        diff0 = int(face[0]!=oldVertexNb)
+        diff1 = int(face[1]!=oldVertexNb)
+        diff2 = int(face[2]!=oldVertexNb)
         face = (face[0]+int(face[0]==oldVertexNb)*(newVertexNb - oldVertexNb), 
                 face[1]+int(face[1]==oldVertexNb)*(newVertexNb - oldVertexNb), 
                 face[2]+int(face[2]==oldVertexNb)*(newVertexNb - oldVertexNb))
 
+        # diff0 = int(face[0]!=newVertexNb)
+        # diff1 = int(face[1]!=newVertexNb)
+        # diff2 = int(face[2]!=newVertexNb)
+
         v2_ind_act = oldVertexNb - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[0]])
-        face = (face[0] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[0]]) * int(face[0]!=newVertexNb), #probablement int(face[0]<newVertexNb)
-                face[1] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[1]]) * int(face[1]!=newVertexNb),
-                face[2] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[2]]) * int(face[2]!=newVertexNb))
+        face = (face[0] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[0]]) * diff0, #probablement int(face[0]<newVertexNb)
+                face[1] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[1]]) * diff1,
+                face[2] - sum([int(e) for e in  np.array([oldVertexNb] + deletedVertices)<face[2]]) * diff2)
 
         # face = (face[0]-int(any(face[0]>(np.array([oldVertexNb] + deletedVertices))) and face[0]!=newVertexNb)*max(1,len(deletedVertices)), 
         #         face[1]-int(any(face[1]>(np.array([oldVertexNb] + deletedVertices))) and face[1]!=newVertexNb)*max(1,len(deletedVertices)), 

@@ -21,8 +21,8 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQu
     # _, v_bar = get_optimal_contraction(v1,v2, Q1, Q2) #ou v_bar = v_bar_list[indice] si on choisit de les stocker
     
     #v1 devient  v_bar
-    instructions += ['ev ' + str(v1_ind) + ' ' + verticeTxt(v_bar) + ' ' + verticeTxt(model.vertices[v1_ind-1])]
-    # instructions += ['ev ' + str(v1_ind- sum([int(e) for e in  np.array(deletedVertices)<v1_ind])) + ' ' + verticeTxt(v_bar) + ' ' + verticeTxt(model.vertices[v1_ind-1])]
+    # instructions += ['ev ' + str(v1_ind) + ' ' + verticeTxt(v_bar) + ' ' + verticeTxt(model.vertices[v1_ind-1])]
+    instructions += ['ev ' + str(v1_ind- sum([int(e) for e in  np.array(deletedVertices)<v1_ind])) + ' ' + verticeTxt(v_bar) + ' ' + verticeTxt(model.vertices[v1_ind-1])]
     model.vertices[v1_ind-1] = v_bar
     Qlist[v1_ind] = Q1 + Q2
     
@@ -47,19 +47,29 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQu
         if instruct[:2] == 'df':
             df = [int(e) for e in instruct.split()[2:]]
             v2_ind_act = v2_ind - sum([int(e) for e in  np.array(deletedVertices)<v2_ind])
+
+            dfXeqVertexNb = df[0] == vertexNb
+            if dfXeqVertexNb:
+                df[0] -= 1
             if v2_ind_act == df[0]:
                 df[0] = vertexNb
-            elif v2_ind_act < df[0] and df[0] < vertexNb:
+            elif v2_ind_act < df[0] and df[0] < vertexNb and not dfXeqVertexNb:
                 df[0] -= 1
 
+            dfXeqVertexNb = df[1] == vertexNb
+            if dfXeqVertexNb:
+                df[1] -= 1
             if v2_ind_act == df[1]:
                 df[1] = vertexNb
-            elif v2_ind_act < df[1] and df[1] < vertexNb:
+            elif v2_ind_act < df[1] and df[1] < vertexNb and not dfXeqVertexNb:
                 df[1] -= 1
 
+            dfXeqVertexNb = df[2] == vertexNb
+            if dfXeqVertexNb:
+                df[2] -= 1
             if v2_ind_act == df[2]:
                 df[2] = vertexNb
-            elif v2_ind_act < df[2] and df[2] < vertexNb:
+            elif v2_ind_act < df[2] and df[2] < vertexNb and not dfXeqVertexNb:
                 df[2] -= 1
 
             instructions[i] = str(instruct.split()[:2] + df).replace(",", "").replace("'", "")[1:-1]

@@ -35,7 +35,14 @@ def simplifyObj(listInstruction, pathIn = 'bunny_origin.obj'):
             # Edit vertex
             
             listI = instruction.split()
-            indice = int(listI.pop(1)) - 1
+            indice = 0
+            indToReach = int(listI.pop(1))
+            i = 0
+            while i < indToReach:
+                if obj.vertices[indice].any() != None:
+                    i += 1
+                indice += 1
+            indice -= 1
             vertex = np.array([float(listI[i]) for i in range(1,4)])
             obj.vertices[indice] = vertex
             
