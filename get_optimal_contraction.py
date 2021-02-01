@@ -15,7 +15,7 @@ def get_optimal_contraction(v1,v2,q1,q2):
     
     conditionnement = np.linalg.cond(q_aux)
     #Si q_aux est inversible, 
-    if (conditionnement < 1 / np.finfo(q_barre.dtype).eps) :
+    if (conditionnement < 1 / np.finfo(q_aux.dtype).eps) :
         q_inv = np.linalg.inv(q_aux)
         vect_un = [0, 0, 0, 1]
         v_barre = q_inv.dot(vect_un)
@@ -23,23 +23,41 @@ def get_optimal_contraction(v1,v2,q1,q2):
         cost = cost.item()
         v_barre = np.squeeze(np.asarray(v_barre))[0:3] #on ne veut pas la représentation homogène
     
-    #Si cela aussi échoue, choisir v_barre parmi les extrémités ou le milieu
     else:
-        milieu = 0.5 * (v1 + v2)
-        candidats = [v1, milieu, v2]
-        vect_homogene = np.ones(4)
-        cost = np.Inf
-        imin = 0
-        for i in range(3):
-            vect_homogene[0:3] = candidats[i]
-            costi = vect_homogene.dot(q_barre).dot(vect_homogene)
-            if costi < cost:
-                cost = costi
-                imin = i
-        cost = cost.item()
-        v_barre = candidats[imin]
+        # print("cas non inversible activé pour v1= " + str(v1) + " v2= " + str(v2))
+        #Si q_aux n'est pas inversible, prendre le sommet optimal sur le segment v1,v2
+        v1_hom = np.ones(4)
+        v2_hom = np.ones(4)
+        v1_hom[0:3] = v1
+        v2_hom[0:3] = v2
+        cout_v1 = v1_hom.dot(q_barre).dot(v1_hom).item()
+        cout_v2 = v2_hom.dot(q_barre).dot(v2_hom).item()
+        cout_v1v2 = v1_hom.dot(q_barre).dot(v2_hom).item()
+        #cela revient à trouver le minimum d'un polynôme de degré 2 dans [0,1]
+        a = cout_v1 - 2*cout_v1v2 + cout_v2
+        b = 2*(cout_v1v2 - cout_v2)
+        # c = cout_v2 #on n'a pas besoin de c pour les calculs
         
-    
+        #le seul cas intéressant est celui où a > 0 et -b/2a est dans [0,1]
+        if a > 0 :
+            alpha = -b / (2*a)
+        else :
+            alpha = -1
+        
+        if 0 <= alpha <= 1:
+            v_barre = alpha * v1_hom + (1-alpha)*v1_hom
+            cost = v_barre.dot(q_barre).dot(v_barre)
+            cost = cost.item()
+            v_barre = v_barre[0:3]
+        
+        #Si cela aussi échoue, choisir v_barre parmi les extrémités ou le milieu
+        else:
+            milieu_hom = 0.5* (v1_hom + v2_hom)
+            cout_milieu = milieu_hom.dot(q_barre).dot(milieu_hom).item()
+            candidats = [(cout_v1, 1, v1_hom), (cout_milieu, 2, milieu_hom), (cout_v2, 3, v2_hom)]
+            paire_min = min(candidats)
+            cost = paire_min[0]
+            v_barre = paire_min[2][0:3]
 
     return cost, v_barre
 
