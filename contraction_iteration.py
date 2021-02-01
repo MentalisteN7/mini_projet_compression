@@ -49,27 +49,21 @@ def contraction_iteration(model: ObjLoader, Qlist, validPairs, pairQueue: PairQu
             v2_ind_act = v2_ind - sum([int(e) for e in  np.array(deletedVertices)<v2_ind])
 
             dfXeqVertexNb = df[0] == vertexNb
-            if dfXeqVertexNb:
-                df[0] -= 1
             if v2_ind_act == df[0]:
                 df[0] = vertexNb
-            elif v2_ind_act < df[0] and df[0] < vertexNb and not dfXeqVertexNb:
+            elif v2_ind_act < df[0] and df[0] < vertexNb or dfXeqVertexNb:
                 df[0] -= 1
 
             dfXeqVertexNb = df[1] == vertexNb
-            if dfXeqVertexNb:
-                df[1] -= 1
             if v2_ind_act == df[1]:
                 df[1] = vertexNb
-            elif v2_ind_act < df[1] and df[1] < vertexNb and not dfXeqVertexNb:
+            elif v2_ind_act < df[1] and df[1] < vertexNb or dfXeqVertexNb:
                 df[1] -= 1
 
             dfXeqVertexNb = df[2] == vertexNb
-            if dfXeqVertexNb:
-                df[2] -= 1
             if v2_ind_act == df[2]:
                 df[2] = vertexNb
-            elif v2_ind_act < df[2] and df[2] < vertexNb and not dfXeqVertexNb:
+            elif v2_ind_act < df[2] and df[2] < vertexNb or dfXeqVertexNb:
                 df[2] -= 1
 
             instructions[i] = str(instruct.split()[:2] + df).replace(",", "").replace("'", "")[1:-1]
