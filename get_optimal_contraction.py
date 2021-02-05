@@ -61,28 +61,6 @@ def get_optimal_contraction(v1,v2,q1,q2):
             v_barre = paire_min[2][0:3]
 
     return cost, v_barre
-
-
-
-# def __addition_tuple(v1,v2):
-#         v1_x = v1[0]
-#         v1_y = v1[1]
-#         v1_z = v1[2]
-# 
-#         v2_x = v2[0]
-#         v2_y = v2[1]
-#         v2_z = v2[2]
-# 
-#         v =  ( v1_x + v2_x, v1_y + v2_y, v1_z + v2_z )
-#         return v
-# 
-# def __division_tuple(v1,diviseur):
-#         v1_x = v1[0] / 2
-#         v1_y = v1[1] / 2
-#         v1_z = v1[2] / 2
-# 
-#         v =  (v1_x, v1_y, v1_z)
-#         return v
         
 def main():
     obj = 'bunny_origin.obj'

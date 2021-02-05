@@ -19,8 +19,6 @@ def generate_compressed_file(pathIn = 'assets/bunny_origin.obj', pathOut = 'bunn
     validPairs = infoVertexVoisin()
     validPairs.treshold = treshold
     validPairs.init_voisin(obj)
-    # print('voisins de 30 : ', (validPairs.voisin_per_vertex[30]))
-    # print('voisins de 59 : ', (validPairs.voisin_per_vertex[59]))
     
     #3. Compute the optimal contraction target v_bar and the cost for each valid pair (v1,v2)
     #4. Place all the pairs in a heap keyed on cost with the minimum cost pair at the top.
@@ -34,16 +32,13 @@ def generate_compressed_file(pathIn = 'assets/bunny_origin.obj', pathOut = 'bunn
             Q2 = listQ[v2_ind-1]
             cost, v_bar = get_optimal_contraction(v1, v2, Q1, Q2)
             pairQueue.push((v1_ind+1,v2_ind, v_bar), cost)
-            # print("ajouté paire", (v1_ind+1,v2_ind))
     
     #5. Iteratively remove the pair (v1;v2) of least cost from the heap,contract this pair
     deletedVertices = []
     instructions = []
     numVertices = len(obj.vertices)
     vertexNb = numVertices
-    # print('numVertices = ', numVertices)
-    # print('targetSize = ', targetSize)
-    # print('pairQueue.isEmpty() = ', pairQueue.isEmpty())
+    
     while (numVertices > targetSize) and (not pairQueue.isEmpty()) :
         obj, listQ, validPairs, pairQueue, deletedVertices, instructions, vertexNb = \
             contraction_iteration(obj, listQ, validPairs, pairQueue, deletedVertices, instructions, vertexNb)

@@ -23,51 +23,36 @@ class infoVertexVoisin():
             first_vertex = sorted_face[0]
             second_vertex = sorted_face[1]
             third_vertex = sorted_face[2]
-            # print(first_vertex,second_vertex,third_vertex)
             voisins_first = self.dic_voisins.get(first_vertex)
             if voisins_first == None:
                 self.dic_voisins[first_vertex] = [second_vertex]
                 self.dic_voisins[first_vertex] = self.dic_voisins[first_vertex] + [third_vertex]
-
-                # self.voisin_per_vertex[first_vertex] = [second_vertex]
-                # self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [third_vertex]
             
             else:
                 is_second_vertex_in_first = second_vertex in voisins_first
                 if not(is_second_vertex_in_first):
                     self.dic_voisins[first_vertex] = self.dic_voisins[first_vertex] + [second_vertex]
 
-                    # self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [second_vertex]
-
                 is_third_vertex_in_first = third_vertex in voisins_first
                 if not(is_third_vertex_in_first):
                     self.dic_voisins[first_vertex] = self.dic_voisins[first_vertex] + [third_vertex]
 
-                    # self.voisin_per_vertex[first_vertex] = self.voisin_per_vertex[first_vertex] + [third_vertex]
-
             voisins_second = self.dic_voisins.get(second_vertex)
             if voisins_second == None:
                 self.dic_voisins[second_vertex] = [third_vertex]
-
-                # self.voisin_per_vertex[second_vertex] = [first_vertex]
-                # self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [third_vertex]
             
             else:
                 is_third_vertex_in_second = third_vertex in voisins_second
                 if not(is_third_vertex_in_second):
                     self.dic_voisins[second_vertex] = self.dic_voisins[second_vertex] + [third_vertex]
-
-                    # self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [third_vertex]
                 
                 voisins_vertex_first = self.voisin_per_vertex.get(first_vertex)
                 if voisins_vertex_first == None:
                     # On ne passe normalement jamais dans cette boucle
-                    # self.voisin_per_vertex[second_vertex] = [first_vertex]
                     pass
                 else:
                     is_first_vertex_in_second = third_vertex in voisins_vertex_first
                     if not(is_first_vertex_in_second):
-                        # self.voisin_per_vertex[second_vertex] = self.voisin_per_vertex[second_vertex] + [first_vertex]
                         pass
             
             voisins_third_vide = self.dic_voisins.get(third_vertex)
